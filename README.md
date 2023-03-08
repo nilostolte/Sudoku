@@ -123,6 +123,9 @@ This means that even if there are no available candidates, the algorithm has to 
 representation allows to deal with the candidate list with all elements in parallel, that is, all elements at once, we still have to access
 it one by one sequentially even when there are not useful results.
 
+The `push` function also updates `matrix[i][j]`, `lines`, `cols` and `cells` with the new digit/code. Please check the 
+[code](https://github.com/nilostolte/Sudoku/blob/main/src/Grid.java) for details.
+
 ### Parallel check for no candidates
 
 The logic to check if there are no candidates with no loops is much more involved than what's done in the algorithm above, but its not rocket
