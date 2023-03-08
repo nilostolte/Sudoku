@@ -77,7 +77,7 @@ One can observe how `cel` inverse mapping works to access the corresponding cell
 ```java
     public void solve() {
         StkNode node;
-        int digit = 1, code = 1, reacheable;
+        int digit = 1, code = 1, inserted;
         int i, j;
         char[] line = matrix[0];
         char c;
@@ -85,9 +85,9 @@ One can observe how `cel` inverse mapping works to access the corresponding cell
         do {
             c = line[j];
             if (c == 0) {
-                reacheable = lines[i]|cols[j]|cells[cel[i]][cel[j]];
+                inserted = lines[i]|cols[j]|cells[cel[i]][cel[j]];
                 for ( ; digit != 10 ; digit++, code <<= 1 ) {
-                    if (( code & reacheable ) == 0 ) {
+                    if (( code & inserted ) == 0 ) {
                         push(i, j, code, digit);
                         digit = code = 1;
                         break;
@@ -114,17 +114,65 @@ One can observe how `cel` inverse mapping works to access the corresponding cell
     }
 ```
 
-As we can see the variable `reacheable` contains the "candidate list" for a given `matrix[i][j]`. This algorithm is quite simple but it
+As we can see the variable `inserted` contains the "candidate list" for a given `matrix[i][j]`. This algorithm is quite simple but it
 contains a major drawback. Since the digit is represented with a 1 bit in its corresponding position in variable `code`, and it accesses 
-the candidate list in a sequential way, it loops until an empty bit is found (`( code & reacheable ) == 0 )`) or if it finds no available 
+the candidate list in a sequential way, it loops until an empty bit is found (`( code & inserted ) == 0 )`) or if it finds no available 
 candidate (`digit == 10`). 
 
-This means that even if there are no available candidates the algorithm has to loop over all nine bits sequentially. Even if the binary 
+This means that even if there are no available candidates, the algorithm has to loop over all nine bits sequentially. Even if the binary 
 representation allows to deal with the candidate list with all elements in parallel, that is, all elements at once, we still have to access
 it one by one sequentially even when there are not useful results.
 
+### Parallel check for no candidates
 
- 
+The logic to check if there are no candidates with no loops is much more involved than what's done in the algorithm above, but its not rocket
+science. It only requires more effort to use our bit representation in a smarter way.
+
+In the binary representation, a digit is always a power of two, since it's a number with only one bit set to 1 at the position corresponding 
+to the digit. Every power of two subtracted by one is always equal to a sequence of ones on the right of the position it was previously one.
+For example, the digit 9 in binary is 256 in our representation. When subtracted by one, that's 255, that is, 8 bits set to 1 on the right of
+bit 9:
+
+**256 - 1 = 100000000 - 1 = 011111111**
+
+By reversing every bit of this result one obtains a mask that's unique when all these bits are 1, that is, when there are no candidates from
+the bit in the current position until the last bit. 
+
+Let's check the same logic with digit = 5:
+
+**~(000010000 - 1) = ~000001111 = 111110000**
+
+Then by testing if
+
+**111110000 & inserted == 111110000**
+
+What this is actually saying is that there are no candidates neither for 5, neither any digit above it. In other words, this is exactly the 
+condition we were looking for.
+
+One could call this as `reachable`, that is, more formally speaking what we've got is:
+
+**`reacheable = (~(code-1)) & 0x1ff;`**
+
+Notice that we have to filter out all bits above bit 9. Then the condition searched would be written like
+
+**`if ( (inserted & reacheable ) == reacheable )`**
+
+In this case this `if` statement can substitute this one in the algorithm:
+
+**`if ( digit == 10 )`**
+
+And we can put it above the `for` statement instead of what's done in the algorithm above. In this case the `for` can be written
+with no final condition, since it would never be reached:
+
+**`for ( ; ; digit++, code <<= 1 )`**
+
+The reason for that is that if there are no candidates, as calculated here, then the condition of the `if` statement must be true
+and, therefore, the `continue` statement is executed before the `for` statement is ever reached. If the `for` statement is reached,
+the condition in the `if` statement must have been false. In this situation there will always be a valid candidate and the
+`break` command will be executed, ending the loop without testing the end of it.
+
+
+
 
 
 
