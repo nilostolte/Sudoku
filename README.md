@@ -113,3 +113,18 @@ One can observe how `cel` inverse mapping works to access the corresponding cell
         } while (i < 9);
     }
 ```
+
+As we can see the variable `reacheable` contains the "candidate list" for a given `matrix[i][j]`. This algorithm is quite simple but it
+contains a major drawback. Since the digit is represented with a 1 bit in its corresponding position in variable `code`, and it accesses 
+the candidate list in a sequential way, it loops until an empty bit is found (`( code & reacheable ) == 0 )`) or if it finds no available 
+candidate (`digit == 10`). 
+
+This means that even if there are no available candidates the algorithm has to loop over all nine bits sequentially. Even if the binary 
+representation allows to deal with the candidate list with all elements in parallel, that is, all elements at once, we still have to access
+it one by one sequentially even when there are not useful results.
+
+
+ 
+
+
+
