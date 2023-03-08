@@ -70,6 +70,46 @@ The candidate list is detected by the absent elements in the list, that is, all 
 
 The interest in this notation is that the concatenation of all three lists is obtained but just using two bitwise or operations.
 
+One can observe how `cel` inverse mapping works to access the corresponding cell in `cells`. First, `i` and `j` are used as indices in `cel`. `cel[i]` and `cel[j]` give the corresponding line and column in `cells`. Therefore, `cells[cel[i]][cel[j]]` corresponds to the cell where `matrix[i][j]` is contained.
 
+### Algorithm
 
-
+```java
+    public void solve() {
+        StkNode node;
+        int digit = 1, code = 1, reacheable;
+        int i, j;
+        char[] line = matrix[0];
+        char c;
+        i = j = 0;
+        do {
+            c = line[j];
+            if (c == 0) {
+                reacheable = lines[i]|cols[j]|cells[cel[i]][cel[j]];
+                for ( ; digit != 10 ; digit++, code <<= 1 ) {
+                    if (( code & reacheable ) == 0 ) {
+                        push(i, j, code, digit);
+                        digit = code = 1;
+                        break;
+                    }
+                }
+                if ( digit == 10 ) {            // no insertion -> backtrack to previous element
+                    node = pop();               // pop previous inserted i, j, and digit
+                    i = node.i;
+                    j = node.j;
+                    digit = node.digit;
+                    code = node.code;
+                    remove(node);               // remove digit from data structures
+                    digit++; code <<= 1;        // let's try next digit;
+                    line = matrix[i];           // maybe line has changed
+                    continue;                   // short-circuit line by line logic
+                }
+            }
+            if ( j == 8 ) {                     // line by line logic
+                j = -1; i++;                    // last line element, advance to next line
+                if (i < 9) line = matrix[i];    // update line from grid matrix
+            }
+            j++;                                // advance to next element in the line
+        } while (i < 9);
+    }
+```
