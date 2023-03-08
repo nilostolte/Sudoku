@@ -82,7 +82,7 @@ public class Grid {
     /* brut force line by line grid solver with backtracking logic */
     public void solve() {
         StkNode node;
-        int digit = 1, code = 1;
+        int digit = 1, code = 1, reacheable;
         int i, j;
         char[] line = matrix[0];
         char c;
@@ -90,8 +90,9 @@ public class Grid {
         do {
             c = line[j];
             if (c == 0) {
+                reacheable = lines[i]|cols[j]|cells[cel[i]][cel[j]];
                 for ( ; digit != 10 ; digit++, code <<= 1 ) {
-                    if (( code & (lines[i]|cols[j]|cells[cel[i]][cel[j]]) ) == 0 ) {
+                    if (( code & reacheable ) == 0 ) {
                         push(i, j, code, digit);
                         digit = code = 1;
                         break;
