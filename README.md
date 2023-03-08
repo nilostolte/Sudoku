@@ -22,7 +22,7 @@ Both string input formats are common representations of Sudoku grids on the web.
 
 ### Data Structures
 
-The main data structure in the is the `matrix` which is a 9x9 matrix in identical format as the input matrix for the grid. This is the matrix
+The main data structure in `Grid` is `matrix` which is a 9x9 matrix in identical format as the input matrix for the grid. This is the matrix
 where the input matrix is copied to.
 
 #### Auxiliary Data Structures
