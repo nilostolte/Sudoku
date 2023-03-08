@@ -72,7 +72,7 @@ The interest in this notation is that the concatenation of all three lists is ob
 
 One can observe how `cel` inverse mapping works to access the corresponding cell in `cells`. First, `i` and `j` are used as indices in `cel`. `cel[i]` and `cel[j]` give the corresponding line and column in `cells`. Therefore, `cells[cel[i]][cel[j]]` corresponds to the cell where `matrix[i][j]` is contained.
 
-### Algorithm
+## Algorithm
 
 ```java
     public void solve() {
@@ -171,8 +171,15 @@ and, therefore, the `continue` statement is executed before the `for` statement 
 the condition in the `if` statement must have been false. In this situation there will always be a valid candidate and the
 `break` command will be executed, ending the loop without testing the end of it.
 
+## Conclusion
 
+The parallel test for no candidates allows to discard unnecessary loop iterations, while also discarding the unecessary end loop
+condition (since the order of the `if` and the `for` statements was reversed). Nevertheless, for detecting the first candidate
+one still has to loop and test the digits one by one sequentially into the `inserted` list.
 
+The resulting optimized algorithm is a good start but it's a bit complex to understand. The initial algorithm, as shown here and 
+in the code, is more clear and relatively easy to undesrtand after the binary representation is understood.
 
-
+The idea of parallelizing the code by dealing with the whole candidate list at once just using binary representation is promising.
+However, it falls short to parallelize the entire algorithm. 
 
