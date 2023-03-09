@@ -177,13 +177,13 @@ the condition in the `if` statement (2) must have been false. In this situation 
 
 ## Conclusion
 
-The parallel test for no candidates allows to discard unnecessary loop iterations, while also discarding the unecessary end loop
-condition (since the order of the `if` and the `for` statements was reversed). Nevertheless, for detecting the first candidate
-one still has to loop and test the digits one by one sequentially into the `inserted` list.
+The parallel test for no candidates allows to discard unnecessary 'for' loop iterations, while also discarding the unecessary end 
+condition of the `for` loop (since the order of the `if` statement (2) and the `for` statement was reversed). Nevertheless, for 
+detecting the first candidate one still has to loop and test the digits one by one sequentially against the `inserted` list.
 
 The resulting optimized algorithm is a good start but it's a bit complex to understand. The initial algorithm, as shown here and 
-in the code, is more clear and relatively easy to undesrtand after the binary representation is understood.
+in the code, is more clear and relatively easy to understand after the binary representation is understood.
 
 The idea of parallelizing the code by dealing with the whole candidate list at once just using binary representation is promising.
-However, it falls short to parallelize the entire algorithm. 
+However, it falls short if one thinks in using its intrisic parallelism in the entire algorithm. 
 
