@@ -41,7 +41,8 @@ represents a digit already present in that cell.
 #### Additional Auxiliary Data Structures
 
 * `stk` - the stack to implement the backtracking algorithm. It uses an array of 81 positions. It uses the `push` and `pop` operators as shown in
-the [algorithm](https://github.com/nilostolte/Sudoku#algorithm) below. The `push` operator not only stores the digit, its binary presentation, 
+the [algorithm](https://github.com/nilostolte/Sudoku#algorithm) below. The `push` operator not only stores the digit, its 
+[binary representation](https://github.com/nilostolte/Sudoku#binary-representation-for-digits), 
 the line and column (`i` and `j`) of the element inserted in a stack node (`StkNode`), _"pushing"_ the node in the stack, but also inserts the 
 digit in the internal matrix (`matrix[i][j]`) as well as its binary representation into the auxiliary data structures, thus, updating the candidate
 set of the new element inserted. The `pop` operation only removes the node from the stack, but the node is not garbage collected. It remains in the
