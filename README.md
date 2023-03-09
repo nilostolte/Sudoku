@@ -170,7 +170,7 @@ with no final condition, since it would never be reached:
 **`for ( ; ; digit++, code <<= 1 )`**
 
 The reason for that is that if there are no candidates, as calculated here, then the condition of the `if` statement (2) must be true
-and, therefore, the `continue` statement relative to the do-while sstatement is executed before the `for` statement is ever reached.
+and, therefore, the `continue` statement relative to the do-while statement is executed before the `for` statement is ever reached.
 This obviously short-circuits the `for` statement, since it is now below the `if` statement (2). If the `for` statement is reached,
 the condition in the `if` statement (2) must have been false. In this situation there will always be a valid candidate and the
 `break` command relative to the `for` statement will be executed, ending the loop without testing the end of it.
