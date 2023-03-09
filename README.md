@@ -53,7 +53,9 @@ matrix `cells`.
 
 All main auxiliary data structures use a common notation to represent a set of digits present in the line, column, or cell, accordingly.
 A bit is set to one at the position corresponding to a digit present in the set, or set to zero if it's position corresponds to a digit that 
-is absent. By reversing the bits one gets the "candidate set" of digits that are still missing in the corresponding line, column or cell.
+is absent. By reversing the bits one gets the "candidate set" of digits that are still missing in the corresponding line, column or cell. For
+a better understanding of this candidate set scheme, please refer to the 
+[subsection](https://github.com/nilostolte/Sudoku#binary-representation-for-digits) explaining how digits are represented in binary.
 
 Let's suppose a particular line, column or cell having the digits, 1, 3, 4 and 9. This set is then represented by the following binary number:
 
