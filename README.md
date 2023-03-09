@@ -147,14 +147,14 @@ contains a major drawback. Since the digit is represented with a 1 bit in its co
 the candidate set in a sequential way, it loops until an empty bit is found (`( code & inserted ) == 0 )`) or if it finds no available 
 candidate (`digit == 10`). 
 
-This means that even if there are no available candidates, the algorithm has to loop over all nine bits sequentially. Even if the binary 
+This means that even if there are no available candidates, the algorithm has to loop over all the remaining bits sequentially. Even if the binary 
 representation allows to deal with the candidate set with all elements in parallel, that is, all elements at once, we still have to access
-it one by one sequentially even when there are not useful results.
+it one by one sequentially even when there are no useful results.
 
 ### Stack and Backtracking implementation
 
 Digits are tried in ascending order from 1 to 9 for each element in the grid that is not yet occupied. That's why `digit` and `code` 
-variables atre both initialized with 1. Every time a new digit is tried againt the candidate set, and a successful candidate is found 
+variables are both initialized with 1. Every time a new digit is tried againt the candidate set, and a successful candidate is found 
 (that is, when `( code & inserted ) == 0 )`), the digit is pushed on the stack.
 
 The `push` function also updates `matrix[i][j]`, `lines[i]`, `cols[j]` and `cells[cel[i]][cel[j]]` with the new digit. Please check the 
@@ -163,11 +163,13 @@ The `push` function also updates `matrix[i][j]`, `lines[i]`, `cols[j]` and `cell
 
 When no suitable candidate is found (that is, when `( code & inserted ) == 0 )` fails for every candidate tried), then the `for` loop
 ends, and `digit == 10`. In this case, we need to backtrack, that is, remove the current candidate, and advance the previous inserted
-digit to the next candidate. This is taken care by the instructions found under the ` if ( digit == 10 )` statement, where the previous
+digit to the next candidate. This is taken care by the instructions found under the `if ( digit == 10 )` statement, where the previous
 candidate is popped from the stack, removed from `matrix` and the auxiliary data structures (function `remove`), and advanced to
-the next candidate (`digit` is incremented and `code` is shifted left). Notice that the code sequence terminates with a `continue`
+the next candidate (`digit` is incremented and `code` is shifted left). Notice that this command sequence terminates with a `continue`
 statement in order to skip the line by line logic. Since the line and column (`i` and `j`) of the element to be dealt next are already 
-known, modifying `i` or `j` is not required.
+known (they were popped from the stack), modifying `i` or `j` is not required. Also of note, if all the possible candidates were 
+tried, `digit` will become 10, the `for` loop is summarily skipped, and the flow goes back into this code sequence to backtrack once 
+again, dealing with the cases of "cascaded" backtracking sequences.
 
 This completes the backtracking mechanism, allowing, as can be easily infered, to obtain the solution of the input grid in the internal
 matrix. As shown in [Main.java](https://github.com/nilostolte/Sudoku/blob/main/src/Main.java), the solution is printed using the function
@@ -179,8 +181,9 @@ The logic to check if there are no candidates with no loops is much more involve
 science. It only requires more effort to use our bit representation in a smarter way.
 
 ### Mask to Filter Candidate Sets
-Every power of two subtracted by one is always equal to a sequence of ones on the right of the position it was previously one. For example, the 
-digit 8 in binary is 128 in our representation. When subtracted by one, that's 127, that is, 8 bits set to 1 on the right of bit 8:
+Every power of two subtracted by one is always equal to a sequence of ones on the right of the position it was previously one (except in the
+case of 0<sup>2</sup>, since there are no more binary digits on the right of 1). For example, the digit 8 in binary is 128 in our 
+representation. When subtracted by one, that's 127, that is, 8 bits set to 1 on the right of bit 8:
 
 **128 - 1 = 010000000 - 1 = 001111111**
 
