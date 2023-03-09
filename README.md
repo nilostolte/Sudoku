@@ -120,6 +120,25 @@ One can observe how `cel` inverse mapping works to access the corresponding cell
     }
 ```
 
+### Binary Representation for Digits
+
+In the binary representation, a digit is always a power of two, since it's a number with only one bit set to 1 at the position corresponding 
+to the digit.The table below shows the correspondance between digits and their binary representation:
+
+| Digit | Binary Representation | Hexadecimal | Decimal |
+| :---: | :-------------------: | :---------: | :-----: |
+| 1     | **000000001**         | 0x001       | 1       |
+| 2     | **000000010**         | 0x002       | 2       |
+| 3     | **000000100**         | 0x004       | 4       |
+| 4     | **000001000**         | 0x008       | 8       |
+| 5     | **000010000**         | 0x010       | 16      |
+| 6     | **000100000**         | 0x020       | 32      |
+| 7     | **001000000**         | 0x040       | 64      |
+| 8     | **010000000**         | 0x080       | 128     |
+| 9     | **100000000**         | 0x100       | 256     |
+
+### Implementation of Digit Retrieval in Candidate Set
+
 As we can see the variable `inserted` contains the "candidate set" for a given `matrix[i][j]`. This algorithm is quite simple but it
 contains a major drawback. Since the digit is represented with a 1 bit in its corresponding position in variable `code`, and it accesses 
 the candidate set in a sequential way, it loops until an empty bit is found (`( code & inserted ) == 0 )`) or if it finds no available 
@@ -129,32 +148,22 @@ This means that even if there are no available candidates, the algorithm has to 
 representation allows to deal with the candidate set with all elements in parallel, that is, all elements at once, we still have to access
 it one by one sequentially even when there are not useful results.
 
+### Stack and Backtracking implementation
+
+Digits are tried in ascending order from 1 to 9 for each element in the grid that is not yet occupied. That's why `digit` and `code` 
+variables atre both initialized with 1. Every time a new digit is tried againt the candidate set, and a successful candidate is found 
+(that is, when `( code & inserted ) == 0 )`) we push the digit on the stack.
+
 The `push` function also updates `matrix[i][j]`, `lines[i]`, `cols[j]` and `cells[cel[i]][cel[j]]` with the new digit. Please check the 
 [code](https://github.com/nilostolte/Sudoku/blob/main/src/Grid.java) and the description of 
 [`stk`](https://github.com/nilostolte/Sudoku#additional-auxiliary-data-structures) for details.
 
-### Parallel check for no candidates
+## Parallel check for no candidates
 
 The logic to check if there are no candidates with no loops is much more involved than what's done in the algorithm above, but its not rocket
 science. It only requires more effort to use our bit representation in a smarter way.
 
-#### Binary Representation for Digits
-In the binary representation, a digit is always a power of two, since it's a number with only one bit set to 1 at the position corresponding 
-to the digit.The table below shows the correspondance between digits and their binary representation:
-
-| Digit | Binary Representation | Hexadecimal | Decimal |
-| :---: | :-------------------: | :---------: | :-----: |
-| 1     | 000000001             | 0x001       | 1       |
-| 2     | 000000010             | 0x002       | 2       |
-| 3     | 000000100             | 0x004       | 4       |
-| 4     | 000001000             | 0x008       | 8       |
-| 5     | 000010000             | 0x010       | 16      |
-| 6     | 000100000             | 0x020       | 32      |
-| 7     | 001000000             | 0x040       | 64      |
-| 8     | 010000000             | 0x080       | 128     |
-| 9     | 100000000             | 0x100       | 256     |
-
-#### Mask to Filter Candidate Sets
+### Mask to Filter Candidate Sets
 Every power of two subtracted by one is always equal to a sequence of ones on the right of the position it was previously one. For example, the 
 digit 8 in binary is 128 in our representation. When subtracted by one, that's 127, that is, 8 bits set to 1 on the right of bit 8:
 
@@ -187,7 +196,7 @@ Notice that we have to filter out all bits above bit 9. Then the condition searc
 
 **`if ( (inserted & reacheable ) == reacheable )`** (2)
 
-#### Changes in the Algorithm
+### Changes in the Algorithm
 
 In this case this `if` statement can substitute this one in the algorithm:
 
