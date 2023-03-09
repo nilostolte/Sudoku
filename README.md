@@ -43,7 +43,7 @@ represents a digit already present in that cell.
 * `stk` - the stack to implement the backtracking algorithm. It uses an array of 81 positions. It uses the `push` and `pop` operators as shown in
 the [algorithm](https://github.com/nilostolte/Sudoku#algorithm) below. The `push` operator not only stores the digit, its binary presentation, 
 the line and column (`i` and `j`) of the element inserted in a stack node (`StkNode`), _"pushing"_ the node in the stack, but also inserts the 
-digit in the internal matrix (matrix[i][j]) as well as its binary representation into the auxiliary data structures, thus, updating the candidate
+digit in the internal matrix (`matrix[i][j]`) as well as its binary representation into the auxiliary data structures, thus, updating the candidate
 set of the new element inserted. The `pop` operation only removes the node from the stack, but the node is not garbage collected. It remains in the
 stack as an unused element. Nodes are lazily allocated, as `null` elements are found while pushing.
 * `cel` - an array with 9 positions, each one is the inverse mapping of the indices in the lines and columns transformed into indices in the 3x3
