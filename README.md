@@ -158,7 +158,7 @@ One could call this as `reachable`, that is, more formally speaking what we've g
 
 Notice that we have to filter out all bits above bit 9. Then the condition searched would be written like
 
-**`if ( (inserted & reacheable ) == reacheable )`**
+**`if ( (inserted & reacheable ) == reacheable )`** (2)
 
 In this case this `if` statement can substitute this one in the algorithm:
 
@@ -169,10 +169,11 @@ with no final condition, since it would never be reached:
 
 **`for ( ; ; digit++, code <<= 1 )`**
 
-The reason for that is that if there are no candidates, as calculated here, then the condition of the `if` statement must be true
-and, therefore, the `continue` statement is executed before the `for` statement is ever reached. If the `for` statement is reached,
-the condition in the `if` statement must have been false. In this situation there will always be a valid candidate and the
-`break` command will be executed, ending the loop without testing the end of it.
+The reason for that is that if there are no candidates, as calculated here, then the condition of the `if` statement (2) must be true
+and, therefore, the `continue` statement relative to the do-while sstatement is executed before the `for` statement is ever reached.
+This obviously short-circuits the `for` statement, since it is now below the `if` statement (2). If the `for` statement is reached,
+the condition in the `if` statement (2) must have been false. In this situation there will always be a valid candidate and the
+`break` command relative to the `for` statement will be executed, ending the loop without testing the end of it.
 
 ## Conclusion
 
