@@ -177,7 +177,7 @@ the condition in the `if` statement (2) must have been false. In this situation 
 
 ## Conclusion
 
-The parallel test for no candidates allows to discard unnecessary 'for' loop iterations, while also discarding the unecessary end 
+The parallel test for no candidates allows to discard unnecessary `for` loop iterations, while also discarding the unecessary end 
 condition of the `for` loop (since the order of the `if` statement (2) and the `for` statement was reversed). Nevertheless, for 
 detecting the first candidate one still has to loop and test the digits one by one sequentially against the `inserted` list.
 
