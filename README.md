@@ -163,9 +163,9 @@ The `push` function also updates `matrix[i][j]`, `lines[i]`, `cols[j]` and `cell
 
 When no suitable candidate is found (that is, when `( code & inserted ) == 0 )` fails for every candidate tried), then the `for` loop
 ends, and `digit == 10`. In this case, we need to backtrack, that is, remove the current candidate, and advance the previous inserted
-digit to the next candidate. This is taken care by the instructions found under the `if ( digit == 10 )` statement, where the previous
+digit to be the next candidate. This is taken care by the instructions found under the `if ( digit == 10 )` statement, where the previous
 candidate is popped from the stack, removed from `matrix` and the auxiliary data structures (function `remove`), and advanced to
-the next candidate (`digit` is incremented and `code` is shifted left). Notice that this command sequence terminates with a `continue`
+be the next candidate (`digit` is incremented and `code` is shifted left). Notice that this command sequence terminates with a `continue`
 statement in order to skip the line by line logic. Since the line and column (`i` and `j`) of the element to be dealt next are already 
 known (they were popped from the stack), modifying `i` or `j` is not required. Also of note, if all the possible candidates were 
 tried, `digit` will become 10, the `for` loop is summarily skipped, and the flow goes back into this code sequence to backtrack once 
