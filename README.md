@@ -1,5 +1,7 @@
 # Sudoku
-Simple 9x9 Sudoku brute force solver with intrinsic parallel candidate list processing thanks to the use of bit representation for the 1-9 digits as well as bitwise operations allowing to test all the candidates at once.
+Simple 9x9 Sudoku brute force solver with intrinsic parallel candidate set processing thanks to the use of bit representation for the 1-9 digits as well as bitwise operations allowing to test all the candidates at once.
+
+It can be upgraded for 16x16 or 25x25 grids.
 
 ## Grid
 
@@ -29,11 +31,11 @@ where the input matrix is copied to.
 
 The main auxiliary data structures are the most interesting part of this class, besides the solver algorithm itself:
 
-* `lines` - an array with 9 positions, each one, corresponding to a line in the grid, and functioning as a list where each bit represents a digit 
+* `lines` - an array with 9 positions, each one, corresponding to a line in the grid, and functioning as a set where each bit represents a digit 
 already present in that line.
-* `cols` - an array with 9 positions, each one, corresponding to a column in the grid, and functioning as a list where each bit represents a digit 
+* `cols` - an array with 9 positions, each one, corresponding to a column in the grid, and functioning as a set where each bit represents a digit 
 already present in that column.
-* `cells` - a 3x3 matrix, corresponding to a 3x3 cell that the grid is subdivided, with 9 positions, each one functioning as a list where each bit 
+* `cells` - a 3x3 matrix, corresponding to a 3x3 cell that the grid is subdivided, with 9 positions, each one functioning as a set where each bit 
 represents a digit already present in that cell.
 
 #### Additional Auxiliary Data Structures
@@ -43,32 +45,32 @@ in this documentation since the way it works is quite straightforward and easy t
 * `cel` - an array with 9 positions, each one is the inverse mapping of the indices in the lines and columns transformed into indices in the 3x3
 matrix `cells`.
 
-#### Representing a list of present digits with bits
+#### Representing a set of present digits with bits
 
-All main auxiliary data structures use a common notation to represent a list of digits present in the line, column, or cell, accordingly.
-A bit is set to one at the position corresponding to a digit present in the list, or set to zero if it's position corresponds to a digit that 
-is absent. By reversing the bits one gets the "candidate list" of digits that are still missing in the corresponding line, column or cell.
+All main auxiliary data structures use a common notation to represent a set of digits present in the line, column, or cell, accordingly.
+A bit is set to one at the position corresponding to a digit present in the set, or set to zero if it's position corresponds to a digit that 
+is absent. By reversing the bits one gets the "candidate set" of digits that are still missing in the corresponding line, column or cell.
 
-Let's suppose a particular line, column or cell having the digits, 1, 3, 4 and 9. This list is then represented by the following binary number:
+Let's suppose a particular line, column or cell having the digits, 1, 3, 4 and 9. This set is then represented by the following binary number:
 
 **100001101** = **0x10D**
 
-* the first rightmost bit corresponds to the digit 1, and in this case it's present in the list already.
+* the first rightmost bit corresponds to the digit 1, and in this case it's present in the set already.
 * the second bit on its left corresponds to the digit 2, and its clearly not present yet since its value is zero.
 * bits three and four, corresponding to the digits 3 and 4, respectively, are clearly present, because they are both set to one.
-* bits five, six, seven, and eight are all zeros, and thus, digits 5, 6, 7 and 8 are clearly absent in the list.
-* bit 9 is 1. Therefore, the digit 9 is also present in the list.
+* bits five, six, seven, and eight are all zeros, and thus, digits 5, 6, 7 and 8 are clearly absent in the set.
+* bit 9 is 1. Therefore, the digit 9 is also present in the set.
 
-#### Final Candidate List
+#### Final Candidate Set
 
-In order to obtain a candidate list for a given `matrix[i][j]` element of the grid one calculates:
+In order to obtain a candidate set for a given `matrix[i][j]` element of the grid one calculates:
 
 **`lines[i] | cols[j] | cells[ cel[i] ][ cel[j] ]`**  (1)
 
-The expression in (1) gives a list where all bits containing zeros correspond to the available digits that are possible to be in `matrix[i][j]`. 
-The candidate list is detected by the absent elements in the list, that is, all bits which are zero. 
+The expression in (1) gives a set where all bits containing zeros correspond to the available digits that are possible to be in `matrix[i][j]`. 
+The candidate set is detected by the absent elements in the set, that is, all bits which are zero. 
 
-The interest in this notation is that the concatenation of all three lists is obtained but just using two bitwise or operations.
+The interest in this notation is that the concatenation of all three sets is obtained but just using two bitwise or operations.
 
 One can observe how `cel` inverse mapping works to access the corresponding cell in `cells`. First, `i` and `j` are used as indices in `cel`. `cel[i]` and `cel[j]` give the corresponding line and column in `cells`. Therefore, `cells[cel[i]][cel[j]]` corresponds to the cell where `matrix[i][j]` is contained.
 
@@ -114,13 +116,13 @@ One can observe how `cel` inverse mapping works to access the corresponding cell
     }
 ```
 
-As we can see the variable `inserted` contains the "candidate list" for a given `matrix[i][j]`. This algorithm is quite simple but it
+As we can see the variable `inserted` contains the "candidate set" for a given `matrix[i][j]`. This algorithm is quite simple but it
 contains a major drawback. Since the digit is represented with a 1 bit in its corresponding position in variable `code`, and it accesses 
-the candidate list in a sequential way, it loops until an empty bit is found (`( code & inserted ) == 0 )`) or if it finds no available 
+the candidate set in a sequential way, it loops until an empty bit is found (`( code & inserted ) == 0 )`) or if it finds no available 
 candidate (`digit == 10`). 
 
 This means that even if there are no available candidates, the algorithm has to loop over all nine bits sequentially. Even if the binary 
-representation allows to deal with the candidate list with all elements in parallel, that is, all elements at once, we still have to access
+representation allows to deal with the candidate set with all elements in parallel, that is, all elements at once, we still have to access
 it one by one sequentially even when there are not useful results.
 
 The `push` function also updates `matrix[i][j]`, `lines[i]`, `cols[j]` and `cells[cel[i]][cel[j]]` with the new digit. Please check the 
@@ -179,11 +181,11 @@ the condition in the `if` statement (2) must have been false. In this situation 
 
 The parallel test for no candidates allows to discard unnecessary `for` loop iterations, while also discarding the unecessary end 
 condition of the `for` loop (since the order of the `if` statement (2) and the `for` statement was reversed). Nevertheless, for 
-detecting the first candidate one still has to loop and test the digits one by one sequentially against the `inserted` list.
+detecting the first candidate one still has to loop and test the digits one by one sequentially against the `inserted` set.
 
 The resulting optimized algorithm is a good start but it's a bit complex to understand. The initial algorithm, as shown here and 
 in the code, is more clear and relatively easy to understand after the binary representation is understood.
 
-The idea of parallelizing the code by dealing with the whole candidate list at once just using binary representation is promising.
+The idea of parallelizing the code by dealing with the whole candidate set at once just using binary representation is promising.
 However, it falls short if one thinks in using its intrisic parallelism in the entire algorithm. 
 
