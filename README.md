@@ -130,7 +130,7 @@ representation allows to deal with the candidate set with all elements in parall
 it one by one sequentially even when there are not useful results.
 
 The `push` function also updates `matrix[i][j]`, `lines[i]`, `cols[j]` and `cells[cel[i]][cel[j]]` with the new digit. Please check the 
-[code](https://github.com/nilostolte/Sudoku/blob/main/src/Grid.java) for details.
+[code](https://github.com/nilostolte/Sudoku/blob/main/src/Grid.java) and the description of [`stk`](https://github.com/nilostolte/Sudoku/blob/main/README.md#additional-auxiliary-data-structures) for details.
 
 ### Parallel check for no candidates
 
