@@ -164,8 +164,8 @@ In this case this `if` statement can substitute this one in the algorithm:
 
 **`if ( digit == 10 )`**
 
-And we can put it above the `for` statement instead of what's done in the algorithm above. In this case the `for` can be written
-with no final condition, since it would never be reached:
+And we should place `if` statement (2) above the `for` loop statement instead of the order presented in the algorithm above. In this 
+case the `for` can be written with no final condition, since it would never be reached:
 
 **`for ( ; ; digit++, code <<= 1 )`**
 
