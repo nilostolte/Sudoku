@@ -70,7 +70,7 @@ In order to obtain a candidate set for a given `matrix[i][j]` element of the gri
 The expression in (1) gives a set where all bits containing zeros correspond to the available digits that are possible to be in `matrix[i][j]`. 
 The candidate set is detected by the absent elements in the set, that is, all bits which are zero. 
 
-The interest in this notation is that the concatenation of all three sets is obtained but just using two bitwise or operations.
+The interest in this notation is that the concatenation of all three sets is obtained by just using two bitwise or operations.
 
 One can observe how `cel` inverse mapping works to access the corresponding cell in `cells`. First, `i` and `j` are used as indices in `cel`. `cel[i]` and `cel[j]` give the corresponding line and column in `cells`. Therefore, `cells[cel[i]][cel[j]]` corresponds to the cell where `matrix[i][j]` is contained.
 
