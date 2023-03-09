@@ -3,6 +3,9 @@ Simple 9x9 Sudoku brute force solver with intrinsic parallel candidate set proce
 
 It can be upgraded for 16x16 or 25x25 grids.
 
+Updates done here and corresponding code are reported on Twitter below [this tweet](https://twitter.com/nilostolte/status/1633804599730622469). Please
+follow me on Twitter for updates.
+
 ## Grid
 
 This is the [class](https://github.com/nilostolte/Sudoku/blob/main/src/Grid.java) containing the grid to be solved. 
