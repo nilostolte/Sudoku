@@ -138,15 +138,35 @@ The `push` function also updates `matrix[i][j]`, `lines[i]`, `cols[j]` and `cell
 The logic to check if there are no candidates with no loops is much more involved than what's done in the algorithm above, but its not rocket
 science. It only requires more effort to use our bit representation in a smarter way.
 
+#### Binary Representation for Digits
 In the binary representation, a digit is always a power of two, since it's a number with only one bit set to 1 at the position corresponding 
-to the digit. Every power of two subtracted by one is always equal to a sequence of ones on the right of the position it was previously one.
-For example, the digit 9 in binary is 256 in our representation. When subtracted by one, that's 255, that is, 8 bits set to 1 on the right of
-bit 9:
+to the digit.The table below shows the correspondance between digits and their binary representation:
 
-**256 - 1 = 100000000 - 1 = 011111111**
+| Digit | Binary Representation | Hexadecimal | Decimal |
+| :---: | :-------------------: | :---------: | :-----: |
+| 1     | 000000001             | 0x001       | 1       |
+| 2     | 000000010             | 0x002       | 2       |
+| 3     | 000000100             | 0x004       | 4       |
+| 4     | 000001000             | 0x008       | 8       |
+| 5     | 000010000             | 0x010       | 16      |
+| 6     | 000100000             | 0x020       | 32      |
+| 7     | 001000000             | 0x040       | 64      |
+| 8     | 010000000             | 0x080       | 128     |
+| 9     | 100000000             | 0x100       | 256     |
+
+#### Mask to Filter Candidate Sets
+Every power of two subtracted by one is always equal to a sequence of ones on the right of the position it was previously one. For example, the 
+digit 8 in binary is 128 in our representation. When subtracted by one, that's 127, that is, 8 bits set to 1 on the right of bit 8:
+
+**128 - 1 = 010000000 - 1 = 001111111**
 
 By reversing every bit of this result one obtains a mask that's unique when all these bits are 1, that is, when there are no candidates from
-the bit in the current position until the last bit. 
+the bit in the current position until the last bit:
+
+**~001111111 = 110000000**
+
+That is, by executing a bitwise _and_ operation (`&`) between this mask and a candidate set, and if the result is identical to this mask,
+we can say there is no available candidates left in the candidate set, starting with the digit we are trying, 8 in this case.
 
 Let's check the same logic with digit = 5:
 
@@ -166,6 +186,8 @@ One could call this as `reachable`, that is, more formally speaking what we've g
 Notice that we have to filter out all bits above bit 9. Then the condition searched would be written like
 
 **`if ( (inserted & reacheable ) == reacheable )`** (2)
+
+#### Changes in the Algorithm
 
 In this case this `if` statement can substitute this one in the algorithm:
 
