@@ -164,16 +164,16 @@ In this case this `if` statement can substitute this one in the algorithm:
 
 **`if ( digit == 10 )`**
 
-And we should place `if` statement (2) above the `for` loop statement instead of the order presented in the algorithm above. In this 
+And we should place `if` statement (2) above the `for` loop statement instead of the order presented in the algorithm. In this 
 case the `for` can be written with no final condition, since it would never be reached:
 
-**`for ( ; ; digit++, code <<= 1 )`**
+**`for ( ; ; digit++, code <<= 1 )`** (3)
 
 The reason for that is that if there are no candidates, as calculated here, then the condition of the `if` statement (2) must be true
-and, therefore, the `continue` statement relative to the do-while statement is executed before the `for` statement is ever reached.
-This obviously short-circuits the `for` statement, since it is now below the `if` statement (2). If the `for` statement is reached,
+and, therefore, the `continue` statement relative to the do-while statement is executed before the `for` statement (3) is ever reached.
+This obviously short-circuits the `for` statement (3), since it is now below the `if` statement (2). If the `for` statement (3) is reached,
 the condition in the `if` statement (2) must have been false. In this situation there will always be a valid candidate and the
-`break` command relative to the `for` statement will be executed, ending the loop without testing the end of it.
+`break` command relative to the `for` statement (3) will be executed, ending the `for` loop without even testing the end condition.
 
 ## Conclusion
 
