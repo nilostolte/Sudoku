@@ -173,7 +173,7 @@ The reason for that is that if there are no candidates, as calculated here, then
 and, therefore, the `continue` statement relative to the do-while statement is executed before the `for` statement (3) is ever reached.
 This obviously short-circuits the `for` statement (3), since it is now below the `if` statement (2). If the `for` statement (3) is reached,
 the condition in the `if` statement (2) must have been false. In this situation there will always be a valid candidate and the
-`break` command relative to the `for` statement (3) will be executed, ending this loop without even testing the end condition.
+`break` command relative to the `for` statement (3) will be executed, always ending this loop with no need to test the end condition.
 
 ## Conclusion
 
