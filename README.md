@@ -244,5 +244,11 @@ The resulting optimized algorithm is a good start but it's a bit complex to unde
 in the code, is more clear and relatively easy to understand after the binary representation is understood.
 
 The idea of parallelizing the code by dealing with the whole candidate set at once just using binary representation is promising.
-However, it falls short if one thinks in using its intrisic parallelism in the entire algorithm. 
+However, it falls short if one thinks in using its intrisic parallelism in the entire algorithm.
+
+The minimal time measured for the optimized algorithm to solve a grid was 10 miliseconds on an i7 2.2 Ghz, and the double for the 
+unoptimized algorithm. Times are quite variable in Java while measuring fast algorithms like this. It would worth trying an entirely
+compiled language to verify if times are less variable. It looks like that for this kind of problem an enterily compiled language would
+be more appropriate, since one expects similar times for the same grid running at different times. Unfortunately this is not the case
+for this java implementation.
 
