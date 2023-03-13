@@ -250,5 +250,5 @@ The minimal time measured for the optimized algorithm to solve a grid was 10 mil
 unoptimized algorithm. Times are quite variable in Java while measuring fast algorithms like this. It would worth trying an entirely
 compiled language to verify if times are less variable. It looks like that for this kind of problem an enterily compiled language would
 be more appropriate, since one expects similar times for the same grid running at different times. Unfortunately this is not the case
-for this java implementation.
+for this Java implementation.
 
