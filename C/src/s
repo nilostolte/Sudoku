@@ -1,1 +1,12 @@
+CC = gcc
+CFLAGS = -g
+
+sudoku: main.o grid.o
+	$(CC) $(CFLAGS) -o sudoku main.o grid.o
+
+main.o: main.c grid.h
+	$(CC) $(CFLAGS) -c -o main.o main.c
+	
+grid.o: grid.c grid.h
+	$(CC) $(CFLAGS) -c -o grid.o grid.c
 
