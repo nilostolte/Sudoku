@@ -266,7 +266,7 @@ on the web:
 **_6_** |&nbsp; |&nbsp; |&nbsp; | **1** |&nbsp; |&nbsp; |&nbsp; | **3** |&nbsp; |
 **_7_** |&nbsp; |&nbsp; | **1** |&nbsp; |&nbsp; |&nbsp; |&nbsp; | **6** | **8** |
 **_8_** |&nbsp; |&nbsp; | **8** | **5** |&nbsp; |&nbsp; |&nbsp; | **1** |&nbsp; |
-**_9_** |&nbsp; | **9** |&nbsp; |&nbsp; |&nbsp; |&nbsp; | **4** |&nbsp; |&nbsp; |
+**_9_** |&nbsp; |<img src="9.svg"> |&nbsp; |&nbsp; |&nbsp; |&nbsp; | **4** |&nbsp; |&nbsp; |
 
 ### Benchmarks in Java
 
