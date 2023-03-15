@@ -276,11 +276,11 @@ Java implementation.
 
 ### Benchmarks in C
 
-Astonishingly, execution times running the executable compiled in 
-[C](https://github.com/nilostolte/Sudoku/blob/main/C/bin/sudoku.exe) were only slightly more constant than in Java. 
-The times varied from 1.5 miliseconds to 5.26 miliseconds. However, these variations were considerably much less 
-significant than in Java. Also, C offered roughly about an order of magnitude to about twice less time than the Java 
-implementation of the same optimized algorithm. 
+Astonishingly, execution times running the 
+[executable compiled in C](https://github.com/nilostolte/Sudoku/blob/main/C/bin/sudoku.exe) 
+were only slightly more constant than in Java. The times varied from 1.5 miliseconds to 5.26 miliseconds. However, 
+these variations were considerably much less significant than in Java. Also, C offered roughly about an order of 
+magnitude to about twice less time than the Java implementation of the same optimized algorithm. 
 
 ## Conclusion
 
