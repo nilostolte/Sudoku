@@ -3,7 +3,7 @@
 #include <stdlib.h>
 
 #include "grid.h"
-
+/* THE GRID MATRIX */
 unsigned char **matrix;    /* matrix holding the grid */
 
 /* AUXILIARY DATA STRUCTURES */
@@ -14,6 +14,7 @@ unsigned short *cols;        /* tracks occupancy of all columns */
 unsigned short *cel;
 unsigned short **cells;     /* 3x3 matrix tracking occupancy of 9 cells */
 
+/* Memory allocation and initialization of auxiliary data structures */
 void init_structures() {
 	matrix = malloc(9 * sizeof(unsigned char *));
 	unsigned char *m1 = malloc(81 * sizeof(unsigned char));
@@ -33,6 +34,9 @@ void init_structures() {
 	reinit();
 }
 
+/* Reset auxiliary data structures 
+   To be called when one needs to load another grid with set
+*/
 void reinit() {
 	int i, j;
 	/* reset data structures */
@@ -47,6 +51,10 @@ void reinit() {
 	}
 }
 
+/* Copies a new grid from its string representation
+   - reinit() must be called first to clean the auxiliary
+     data structures
+*/
 void set(char *s) {
 	int i, j, k, code;
 	unsigned char *line, c;
@@ -71,22 +79,27 @@ void set(char *s) {
 	}
 }
 
-/* simple and fast implementation of a stack for backtracking */
-struct StkNode {
-	unsigned short i;
-	unsigned short j;
-	unsigned short code;
-	unsigned short digit;
+/* Simple and fast implementation of a stack for backtracking */
+
+struct StkNode {		// Structure to store diit and its position on the stack
+	unsigned short i;	// line where the digit was inserted
+	unsigned short j;	// column where the digit was inserted
+	unsigned short code;// binary code of the digit
+	unsigned short digit;  // the digit
 };
 
-struct StkNode *stk;
-int stkptr;
+struct StkNode *stk;	// The stack
+int stkptr;				// the stack pointer
 
+/* Allocates memory for the stack */
 void init_stack() {
-	stk = malloc(sizeof(struct StkNode));
+	stk = malloc(81 * sizeof(struct StkNode));
 	stkptr = -1;
 }
 
+/* Pops the digit its position from the stack 
+   - it also removes the digit from the auxiliary data structures
+*/
 struct StkNode *pop() {
 	struct StkNode *node = stk + stkptr;
 	if ( stkptr < 0 ) {
@@ -104,6 +117,9 @@ struct StkNode *pop() {
 	return node;
 }
 
+/* Pushes the digit and its position to the stack
+   - it also inserts digit into the data structures
+*/
 void push(int i, int j, int code, int digit){
 	stkptr++;
 	struct StkNode *node = stk + stkptr;
@@ -118,7 +134,9 @@ void push(int i, int j, int code, int digit){
 	cells[cel[i]][cel[j]] |= code;
 }
 
-/* brute force line by line grid solver with improved performance */
+/* SUDOKU SOLUTION ALGORITHM USING BITS TO REPRESENT DIGITS
+   - brute force line by line grid solver
+*/
 void solve() {
 	struct StkNode *node;
 	int digit = 1, code = 1, inserted, reacheable;
@@ -157,6 +175,7 @@ void solve() {
 	stkptr = -1; // resets stack pointer
 }
 
+/* Prints the grid in matrix */
 void print() {
 	int i, j;
 	unsigned char *line;
