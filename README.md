@@ -263,10 +263,10 @@ on the web:
 **_3_** |&nbsp; | **7** |&nbsp; |&nbsp; | **9** |&nbsp; | **2** |&nbsp; |&nbsp; |
 **_4_** |&nbsp; | **5** |&nbsp; |&nbsp; |&nbsp; | **7** |&nbsp; |&nbsp; |&nbsp; |
 **_6_** |&nbsp; |&nbsp; |&nbsp; |&nbsp; | **4** | **5** | **7** |&nbsp; |&nbsp; |
-**_6_** |&nbsp; |&nbsp; |&nbsp; | **1** |&nbsp; |&nbsp; |&nbsp; | **3** |&nbsp; |
-**_7_** |&nbsp; |&nbsp; | **1** |&nbsp; |&nbsp; |&nbsp; |&nbsp; | **6** | **8** |
-**_8_** |&nbsp; |&nbsp; | **8** | **5** |&nbsp; |&nbsp; |&nbsp; | **1** |&nbsp; |
-**_9_** |&nbsp; |<img src="9.svg"> |&nbsp; |&nbsp; |&nbsp; |&nbsp; | **4** |&nbsp; |&nbsp; |
+**_6_** |&nbsp; |&nbsp; |&nbsp; | <img src="1.svg" width="32" height="32"> |&nbsp; |&nbsp; |&nbsp; | **3** |&nbsp; |
+**_7_** |&nbsp; |&nbsp; | <img src="1.svg" width="32" height="32"> |&nbsp; |&nbsp; |&nbsp; |&nbsp; | **6** | **8** |
+**_8_** |&nbsp; |&nbsp; | **8** | **5** |&nbsp; |&nbsp; |&nbsp; | <img src="1.svg" width="32" height="32"> |&nbsp; |
+**_9_** |&nbsp; |<img src="9.svg" width="32" height="32"> |&nbsp; |&nbsp; |&nbsp; |&nbsp; | **4** |&nbsp; |&nbsp; |
 
 ### Benchmarks in Java
 
