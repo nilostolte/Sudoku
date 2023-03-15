@@ -258,15 +258,15 @@ on the web:
 
  &nbsp; |  _1_  |  _2_  |  _3_  |  _4_  |  _5_  |  _6_  |  _7_  |  _8_  |  _9_ 
 :------:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:
-**_1_** | **8** |&nbsp; |&nbsp; |&nbsp; |&nbsp; |&nbsp; |&nbsp; |&nbsp; |&nbsp; |
-**_2_** |&nbsp; |&nbsp; | **3** | **6** |&nbsp; |&nbsp; |&nbsp; |&nbsp; |&nbsp; |
-**_3_** |&nbsp; | **7** |&nbsp; |&nbsp; | **9** |&nbsp; | **2** |&nbsp; |&nbsp; |
-**_4_** |&nbsp; | **5** |&nbsp; |&nbsp; |&nbsp; | **7** |&nbsp; |&nbsp; |&nbsp; |
-**_6_** |&nbsp; |&nbsp; |&nbsp; |&nbsp; | **4** | **5** | **7** |&nbsp; |&nbsp; |
-**_6_** |&nbsp; |&nbsp; |&nbsp; | <img src="1.svg" width="32" height="32"> |&nbsp; |&nbsp; |&nbsp; | **3** |&nbsp; |
-**_7_** |&nbsp; |&nbsp; | <img src="1.svg" width="32" height="32"> |&nbsp; |&nbsp; |&nbsp; |&nbsp; | **6** | **8** |
-**_8_** |&nbsp; |&nbsp; | **8** | **5** |&nbsp; |&nbsp; |&nbsp; | <img src="1.svg" width="32" height="32"> |&nbsp; |
-**_9_** |&nbsp; |<img src="9.svg" width="32" height="32"> |&nbsp; |&nbsp; |&nbsp; |&nbsp; | **4** |&nbsp; |&nbsp; |
+**_1_** | <img src="8.svg" width="32" height="32"> |&nbsp; |&nbsp; |&nbsp; |&nbsp; |&nbsp; |&nbsp; |&nbsp; |&nbsp; |
+**_2_** |&nbsp; |&nbsp; | <img src="3.svg" width="32" height="32"> | <img src="6.svg" width="32" height="32"> |&nbsp; |&nbsp; |&nbsp; |&nbsp; |&nbsp; |
+**_3_** |&nbsp; | <img src="7.svg" width="32" height="32"> |&nbsp; |&nbsp; | <img src="9.svg" width="32" height="32"> |&nbsp; | <img src="2.svg" width="32" height="32"> |&nbsp; |&nbsp; |
+**_4_** |&nbsp; | <img src="5.svg" width="32" height="32"> |&nbsp; |&nbsp; |&nbsp; | <img src="7.svg" width="32" height="32"> |&nbsp; |&nbsp; |&nbsp; |
+**_6_** |&nbsp; |&nbsp; |&nbsp; |&nbsp; | <img src="4.svg" width="32" height="32"> | <img src="5.svg" width="32" height="32"> | <img src="7.svg" width="32" height="32"> |&nbsp; |&nbsp; |
+**_6_** |&nbsp; |&nbsp; |&nbsp; | <img src="1.svg" width="32" height="32"> |&nbsp; |&nbsp; |&nbsp; | <img src="3.svg" width="32" height="32"> |&nbsp; |
+**_7_** |&nbsp; |&nbsp; | <img src="1.svg" width="32" height="32"> |&nbsp; |&nbsp; |&nbsp; |&nbsp; | <img src="6.svg" width="32" height="32"> | <img src="8.svg" width="32" height="32"> |
+**_8_** |&nbsp; |&nbsp; | <img src="8.svg" width="32" height="32"> | <img src="5.svg" width="32" height="32"> |&nbsp; |&nbsp; |&nbsp; | <img src="1.svg" width="32" height="32"> |&nbsp; |
+**_9_** |&nbsp; | <img src="9.svg" width="32" height="32"> |&nbsp; |&nbsp; |&nbsp; |&nbsp; | <img src="5.svg" width="32" height="32"> |&nbsp; |&nbsp; |
 
 ### Benchmarks in Java
 
