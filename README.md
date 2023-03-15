@@ -1,7 +1,8 @@
 # Sudoku
 Simple 9x9 Sudoku brute force solver with intrinsic parallel candidate set processing thanks to the use of bit representation for the 1-9 digits as well as bitwise operations allowing to test all the candidates at once.
 
-The algorithm was implemented in [Java](https://github.com/nilostolte/Sudoku/blob/main/src), as well as in C. The description below
+The algorithm was implemented in [Java](https://github.com/nilostolte/Sudoku/blob/main/src), as well as in 
+[C](https://github.com/nilostolte/Sudoku/blob/main/C/bin/sudoku.exe). The description below
 concerns the Java implementation, even thouh, the C implementation is quite similar, but without classes.
 
 It can be upgraded for 16x16 or 25x25 grids.
@@ -239,7 +240,8 @@ the condition in the `if` statement (2) must have been false. In this situation 
 
 ## Benchmarks
 
-The benchmarks to measure algorithm performance were performed on an i7 2.2 Ghz machine in Java and in C. Compilation in C has 
+The benchmarks to measure algorithm performance were performed on an i7 2.2 Ghz machine in Java and in C. 
+The [executable file compiled in C](https://github.com/nilostolte/Sudoku/blob/main/C/bin/sudoku.exe) has 
 been done with optimization option `-O3` using the **gcc** compiler on Windows provided in 
 [**w64devkit**](https://github.com/skeeto/w64devkit), which is a Mingw-w64 **gcc** compiler that is portable (can be installed by just
 copying the directory structure in disk, SD card, or thumb drive).
@@ -274,10 +276,11 @@ Java implementation.
 
 ### Benchmarks in C
 
-Astonishingly, execution times running the executable compiled in C were only slightly more constant than in Java. The times varied 
-from 1.5 miliseconds to 5.26 miliseconds. However, these variations were considerably much less significant than in Java. 
-Also, C offered roughly about an order of magnitude to about twice less time than the Java implementation of the same 
-optimized algorithm. 
+Astonishingly, execution times running the executable compiled in 
+[C](https://github.com/nilostolte/Sudoku/blob/main/C/bin/sudoku.exe) were only slightly more constant than in Java. 
+The times varied from 1.5 miliseconds to 5.26 miliseconds. However, these variations were considerably much less 
+significant than in Java. Also, C offered roughly about an order of magnitude to about twice less time than the Java 
+implementation of the same optimized algorithm. 
 
 ## Conclusion
 
