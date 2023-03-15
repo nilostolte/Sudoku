@@ -4,8 +4,9 @@ Simple 9x9 Sudoku brute force solver with intrinsic parallel candidate set proce
 It can be upgraded for 16x16 or 25x25 grids.
 
 The algorithm was implemented in [Java](https://github.com/nilostolte/Sudoku/blob/main/src), as well as in 
-[C](https://github.com/nilostolte/Sudoku/blob/main/C/bin/sudoku.exe). The description below
-concerns the Java implementation, even though, the C implementation is quite similar, but without classes.
+[C](https://github.com/nilostolte/Sudoku/tree/main/C/src). The description below
+concerns the Java implementation, even though, the [C implementation](https://github.com/nilostolte/Sudoku/tree/main/C/src) 
+is quite similar, but without classes.
 
 The [Windows 64 executable supplied](https://github.com/nilostolte/Sudoku/blob/main/C/bin/sudoku.exe) can be used to 
 solve arbitrary grids as decribed in the [documentation](https://github.com/nilostolte/Sudoku/tree/main/C/doc).
