@@ -1,6 +1,9 @@
 # Sudoku
 Simple 9x9 Sudoku brute force solver with intrinsic parallel candidate set processing thanks to the use of bit representation for the 1-9 digits as well as bitwise operations allowing to test all the candidates at once.
 
+The algorithm was implemented in [Java](https://github.com/nilostolte/Sudoku/blob/main/src), as well as in C. The description below
+concerns the Java implementation, even thouh, the C implementation is quite similar, but without classes.
+
 It can be upgraded for 16x16 or 25x25 grids.
 
 Updates done here and corresponding code are reported on Twitter below [this tweet](https://twitter.com/nilostolte/status/1633804599730622469). Please
@@ -234,6 +237,48 @@ This obviously short-circuits the `for` statement (3), since it is now below the
 the condition in the `if` statement (2) must have been false. In this situation there will always be a valid candidate and the
 `break` command relative to the `for` statement (3) will be executed, always ending this loop with no need to test the end condition.
 
+## Benchmarks
+
+The benchmarks to measure algorithm performance were performed on an i7 2.2 Ghz machine in Java and in C. Compilation in C has 
+been done with optimization option `-O3` using the **gcc** compiler on Windows provided in 
+[**w64devkit**](https://github.com/skeeto/w64devkit), which is a Mingw-w64 **gcc** compiler that is portable (can be installed by just
+copying the directory structure in disk, SD card, or thumb drive).
+
+### Main Test Grid
+
+The benchmarks were executed with several different grids, but particularly with this
+one, which is known to be time consuming in automatic methods, and used to compare speed of different methods
+on the web:
+
+ &nbsp; |  _1_  |  _2_  |  _3_  |  _4_  |  _5_  |  _6_  |  _7_  |  _8_  |  _9_ 
+:------:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:
+**_1_** | **8** |&nbsp; |&nbsp; |&nbsp; |&nbsp; |&nbsp; |&nbsp; |&nbsp; |&nbsp; |
+**_2_** |&nbsp; |&nbsp; | **3** | **6** |&nbsp; |&nbsp; |&nbsp; |&nbsp; |&nbsp; |
+**_3_** |&nbsp; | **7** |&nbsp; |&nbsp; | **9** |&nbsp; | **2** |&nbsp; |&nbsp; |
+**_4_** |&nbsp; | **5** |&nbsp; |&nbsp; |&nbsp; | **7** |&nbsp; |&nbsp; |&nbsp; |
+**_6_** |&nbsp; |&nbsp; |&nbsp; |&nbsp; | **4** | **5** | **7** |&nbsp; |&nbsp; |
+**_6_** |&nbsp; |&nbsp; |&nbsp; | **1** |&nbsp; |&nbsp; |&nbsp; | **3** |&nbsp; |
+**_7_** |&nbsp; |&nbsp; | **1** |&nbsp; |&nbsp; |&nbsp; |&nbsp; | **6** | **8** |
+**_8_** |&nbsp; |&nbsp; | **8** | **5** |&nbsp; |&nbsp; |&nbsp; | **1** |&nbsp; |
+**_9_** |&nbsp; | **9** |&nbsp; |&nbsp; |&nbsp; |&nbsp; | **4** |&nbsp; |&nbsp; |
+
+### Benchmarks in Java
+
+The minimal time measured for the optimized algorithm to solve the above grid after several attempts was 10 miliseconds, 
+and the double for the unoptimized algorithm. Nevertheless, the times verified were quite variable as usual in Java 
+while measuring fast algorithms like this. This is the reason it would worth trying to implement it with an entirely 
+compiled language (Java is only compiled when the JIT compiler is triggered) to verify if executiuon times are less 
+variable. It looks like that for this kind of problem, an enterily compiled language would be more appropriate, since 
+one expects similar times for the same grid running at different times. Unfortunately this is not the case for this 
+Java implementation.
+
+### Benchmarks in C
+
+Astonishingly, execution times running the executable compiled in C were only slightly more constant than in Java. The times varied 
+from 1.5 miliseconds to 5.26 miliseconds. However, these variations were considerably much less significant than in Java. 
+Also, C offered roughly about an order of magnitude to about twice less time than the Java implementation of the same 
+optimized algorithm. 
+
 ## Conclusion
 
 The parallel test for no candidates allows to discard unnecessary `for` loop iterations, while also discarding the unecessary end 
@@ -246,9 +291,8 @@ in the code, is more clear and relatively easy to understand after the binary re
 The idea of parallelizing the code by dealing with the whole candidate set at once just using binary representation is promising.
 However, it falls short if one thinks in using its intrisic parallelism in the entire algorithm.
 
-The minimal time measured for the optimized algorithm to solve a grid was 10 miliseconds on an i7 2.2 Ghz, and the double for the 
-unoptimized algorithm. Times are quite variable in Java while measuring fast algorithms like this. It would worth trying an entirely
-compiled language to verify if times are less variable. It looks like that for this kind of problem an enterily compiled language would
-be more appropriate, since one expects similar times for the same grid running at different times. Unfortunately this is not the case
-for this Java implementation.
+A comparative test between the Java implementation and an identical C inplementation has given a considerable advantage to the C
+implementation, not only in terms of raw performance, but also in terms of less variability in times measured for solving
+the same grid, even though, variable execution times were also present in the C implementation. This was expected since Java
+activates the JIT compiler not quite regularly in codes that are executed in short ammounts of time like this one.
 
