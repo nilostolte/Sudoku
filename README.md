@@ -1,11 +1,14 @@
 # Sudoku
 Simple 9x9 Sudoku brute force solver with intrinsic parallel candidate set processing thanks to the use of bit representation for the 1-9 digits as well as bitwise operations allowing to test all the candidates at once.
 
+It can be upgraded for 16x16 or 25x25 grids.
+
 The algorithm was implemented in [Java](https://github.com/nilostolte/Sudoku/blob/main/src), as well as in 
 [C](https://github.com/nilostolte/Sudoku/blob/main/C/bin/sudoku.exe). The description below
-concerns the Java implementation, even thouh, the C implementation is quite similar, but without classes.
+concerns the Java implementation, even though, the C implementation is quite similar, but without classes.
 
-It can be upgraded for 16x16 or 25x25 grids.
+The [Windows 64 executable supplied](https://github.com/nilostolte/Sudoku/blob/main/C/bin/sudoku.exe) can be used to 
+solve arbitrary grids as decribed in the [documentation](https://github.com/nilostolte/Sudoku/tree/main/C/doc).
 
 Updates done here and corresponding code are reported on Twitter below [this tweet](https://twitter.com/nilostolte/status/1633804599730622469). Please
 follow me on Twitter for updates.
