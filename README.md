@@ -242,6 +242,19 @@ This obviously short-circuits the `for` statement (3), since it is now below the
 the condition in the `if` statement (2) must have been false. In this situation there will always be a valid candidate and the
 `break` command relative to the `for` statement (3) will be executed, always ending this loop with no need to test the end condition.
 
+### Simplification of this Optimization - Eliminating the Mask
+
+Another way to see this optimization is by observing that instead of calculating the mask as explained above, which implies using an intermediate
+variable `reacheable`, one can infere an equivalent conclusion by simply discarding this variable and using the following test instead of if statement (2):
+
+**`if ( (inserted + code ) > 511 )`**  (2a)
+
+Which we call here an alternative to (2), or (2a) for short.
+
+If there are only ones in `inserted` starting at the position of the 1 in `code`, adding `code` to `inserted` will result in
+some value that is obviously beyond 511 (or 0x1ff). Therefore, we can detect the same situation with only the test (2a), not only
+eliminating the need of calculating the mask, but also the need of the variable `reacheable`.
+
 ## Benchmarks
 
 The benchmarks to measure algorithm performance were performed on an i7 2.2 Ghz machine in Java and in C. 
