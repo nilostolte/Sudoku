@@ -297,16 +297,76 @@ Astonishingly, execution times running the
 [executable compiled in C](https://github.com/nilostolte/Sudoku/blob/main/C/bin/sudoku.exe) 
 were only slightly more constant than in Java. The times varied from 1.5 miliseconds to 5.26 miliseconds. However, 
 these variations were considerably much less significant than in Java. Also, C offered roughly about an order of 
-magnitude to about twice less time than the Java implementation of the same optimized algorithm. 
+magnitude to about twice less time than the Java implementation of the same optimized algorithm.
 
-## Conclusion
+### Brachless Next Candidate Determination
 
 The parallel test for no candidates allows to discard unnecessary `for` loop iterations, while also discarding the unecessary end 
 condition of the `for` loop (since the order of the `if` statement (2) and the `for` statement was reversed). Nevertheless, for 
 detecting the first candidate one still has to loop and test the digits one by one sequentially against the `inserted` set.
 
-The resulting optimized algorithm is a good start but it's a bit complex to understand. The initial algorithm, as shown here and 
-in the code, is more clear and relatively easy to understand after the binary representation is understood.
+But there is way to calculate the next candidate without any loop. The technique can be illustrated through and example.
+Supposing a candidate set `included = 101011110` (that is, the digits already inserted are {9,7,5,4,3,2}) and `digit = 000000010` (2),
+one strt by adding both:
+
+```
+   101011110    // included digits set: {9,7,5,4,3,2}
+ + 000000010    // digit = 2
+```
+Which is equal to **`000111100`**. One now does an exclusive or with `included`:
+```
+   101111100
+ ^ 101011110
+```
+Which is equal to **`000111110`**. One now adds digit again:
+
+```
+   000111110
+ + 000000010
+```
+Which is equal to **`001000000`**. The bit representation of the next candidate, is obtained by shifting one position to
+right:
+
+```
+   001000000 >> 1
+```
+Which is equal to **`000100000`**. This corresponds to the digit 6, which is exactly the first zero bit found by
+applying the for loop (3).
+
+Therefore, assuming `code` as the bit representation of the digit, one calculates the next candidate doing:
+
+```java
+    code = (((code + inserted) ^ inserted) + code) >> 1; // branchless code calculation
+```
+
+The problem is that one only obtains the bit representation of the digit, not the digit itself. As, one can see, `digit` is
+necessary to be able to use this technique.
+
+### Branchless Transformation from Bit Representation
+
+For this one "assembles" the bit configuration of the digit from its bit representation (`code`) as follows:
+
+```java
+    digit = ( code >> 8 ) |
+            (( code & 0x40 ) >> 6 ) | 
+            (( code & 0x140) >> 5 ) |
+            (( code & 0xf0 ) >> 4 ) |
+            (( code & 0x20 ) >> 3 ) |
+            (( code & 0x14 ) >> 2 ) |
+            (( code & 0x0c ) >> 1 ) |
+            ( code & 3);
+```
+
+This conversion is not only complex to understand, but also requires a high number of operations. Trying out this code and the
+brachless calculation of the next candidate as shown previously, the minimal time in C passed from 1.5 to 1.4 miliseconds, which
+definitely doesn't seem to justify the effort.
+
+
+## Conclusion
+
+The several optimizations proposed are complex to understand and most of them do not result in a siginificant speed up. The 
+initial algorithm, as shown [here](https://github.com/nilostolte/Sudoku#algorithm) and 
+in the Java and C codes, are more clear and relatively easy to understand after the binary representation is understood.
 
 The idea of parallelizing the code by dealing with the whole candidate set at once just using binary representation is promising.
 However, it falls short if one thinks in using its intrisic parallelism in the entire algorithm.
