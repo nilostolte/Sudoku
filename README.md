@@ -306,7 +306,7 @@ condition of the `for` loop (since the order of the `if` statement (2) and the `
 detecting the first candidate one still has to loop and test the digits one by one sequentially against the `inserted` set.
 
 But there is way to calculate the next candidate without any loop. The technique can be illustrated through and example.
-Supposing a candidate set `included = 101011110` (that is, the digits already inserted are {9,7,5,4,3,2}) and 
+Supposing the set `included = 101011110` (that is {9,7,5,4,3,2}, the set of digits already inserted) and 
 `digit = 000000010` (2), one starts by adding both:
 
 ```
