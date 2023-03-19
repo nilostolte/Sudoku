@@ -364,7 +364,7 @@ definitely doesn't seem to justify the effort.
 
 ## Conclusion
 
-The several optimizations proposed are complex to understand and most of them do not result in a siginificant speed up. The 
+The several optimizations proposed are complex to understand and most of them do not result in a significant speed up. The 
 initial algorithm, as shown [here](https://github.com/nilostolte/Sudoku#algorithm) and 
 in the Java and C codes, are more clear and relatively easy to understand after the binary representation is understood.
 
