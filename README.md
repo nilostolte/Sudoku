@@ -358,8 +358,9 @@ For this one "assembles" the bit configuration of the digit from its bit represe
 ```
 
 This conversion is not only complex to understand, but also requires a high number of operations. Trying out this code and the
-brachless calculation of the next candidate as shown previously, the minimal time in C passed from 1.5 to 1.4 miliseconds, which
-apparently wouldn't seem to justify the effort. 
+brachless calculation of the next candidate as shown 
+[previously](https://github.com/nilostolte/Sudoku/blob/main/README.md#brachless-next-candidate-determination), the minimal time
+in C passed from 1.5 to 1.4 miliseconds, which apparently wouldn't seem to justify the effort. 
 
 However, after multiple further opimizations, including using `register` variables, the minimal running time was reduced to 
 1.2 microseconds. This corresponds to a speedup of roughly 20%, which starts to become quite consequential. It's clear that 
