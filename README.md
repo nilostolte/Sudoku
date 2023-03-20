@@ -362,13 +362,17 @@ brachless calculation of the next candidate as shown previously, the minimal tim
 apparently wouldn't seem to justify the effort. 
 
 However, after multiple further opimizations, including using `register` variables, the minimal running time was reduced to 
-1.2 microseconds. This corresponds to a speedup of roughly 20%, which starts to become quite consequential.
+1.2 microseconds. This corresponds to a speedup of roughly 20%, which starts to become quite consequential. It's clear that 
+this is also consequence of the highly "imperative" way of implementing this [algorithm](https://github.com/nilostolte/Sudoku#algorithm)
+which manifestly highly benefits the C implementation, that in itself is more easily optimizable by employing extremely low level
+gimmicks that are absent in Java.
 
 ## Conclusion
 
 The several optimizations proposed are complex to understand and most of them do not result in a significant speed up. The 
-initial algorithm, as shown [here](https://github.com/nilostolte/Sudoku#algorithm) and 
-in the Java and C codes, are more clear and relatively easy to understand after the binary representation is understood.
+[initial algorithm](https://github.com/nilostolte/Sudoku#algorithm) and 
+in the [Java](https://github.com/nilostolte/Sudoku/tree/main/src) and [C](https://github.com/nilostolte/Sudoku/tree/main/C/src) 
+codes, are more clear and relatively easy to understand after the binary representation is understood.
 
 The idea of parallelizing the code by dealing with the whole candidate set at once just using binary representation is promising.
 However, it falls short if one thinks in using its intrisic parallelism in the entire algorithm.
@@ -377,4 +381,10 @@ A comparative test between the Java implementation and an identical C inplementa
 implementation, not only in terms of raw performance, but also in terms of less variability in times measured for solving
 the same grid, even though, variable execution times were also present in the C implementation. This was expected since Java
 activates the JIT compiler not quite regularly in codes that are executed in short ammounts of time like this one.
+
+Given the extremely short execution times, the low level nature of the [original algorithm](https://github.com/nilostolte/Sudoku#algorithm),
+and the considerable amount of low level optmizations that are possible in C language, one may confortably conclude that C is the
+most ppropriate language to use the algorithm, since it will provide faster answers. This means, that the C implementation can be seen
+as the ideal engine for an interactive program where the grid can be entered through a GUI and that the solution must be supplied
+in real time when it is requested by the user.
 
