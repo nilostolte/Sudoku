@@ -375,7 +375,15 @@ in the [Java](https://github.com/nilostolte/Sudoku/tree/main/src) and [C](https:
 codes, are more clear and relatively easy to understand after the binary representation is understood.
 
 The idea of parallelizing the code by dealing with the whole candidate set at once just using binary representation is promising.
-However, it falls short if one thinks in using its intrisic parallelism in the entire algorithm.
+However, it falls short if one was thinking in using its intrisic parallelism in the entire algorithm. As seen 
+[above](https://github.com/nilostolte/Sudoku#brachless-next-candidate-determination), the
+approach allows branchless solutions for the sequential search of a candidate from an arbitrary digit value, which only partially
+exploits this intrisic paralellism. Notwithstanding, it's heavily relying on the integer addition carry propagation mechanism, 
+which is actually a sequential mechanism, but implemented highly efficiently in hardware. This is just additional ingenuity and
+not the same approach. The actual problem in this this partial solution is that it's highly complex and requires a high number 
+of operations. Thus, it highly diverges from the extreme simplicity of the original algorithm. Fortunately, associated with numerous 
+other low level optimizations in C language, it contributed to a significant 
+[speedup](https://github.com/nilostolte/Sudoku#branchless-transformation-from-bit-representation).
 
 A comparative test between the Java implementation and an identical C inplementation has given a considerable advantage to the C
 implementation, not only in terms of raw performance, but also in terms of less variability in times measured for solving
