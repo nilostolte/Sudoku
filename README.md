@@ -380,7 +380,7 @@ However, it falls short if one was thinking in using its intrisic parallelism in
 [above](https://github.com/nilostolte/Sudoku#brachless-next-candidate-determination), the
 approach allows branchless solutions for the sequential search of a candidate from an arbitrary digit value, which only partially
 exploits this intrisic paralellism. Notwithstanding, it's heavily relying on the integer addition carry propagation mechanism, 
-which is actually a sequential mechanism, but implemented highly efficiently in hardware. This is just additional ingenuity and
+which is actually a sequential mechanism, but implemented highly efficiently in hardware. This is just additional ingenuity, but
 not the same approach. The actual problem in this this partial solution is that it's highly complex and requires a high number 
 of operations. Thus, it highly diverges from the extreme simplicity of the original algorithm. Fortunately, associated with numerous 
 other low level optimizations in C language, it contributed to a significant 
