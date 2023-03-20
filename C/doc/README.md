@@ -2,7 +2,7 @@
 # Solving Sudoku Grids with the C Executable
 
 The executable after compiling the C implementation works differently than in Java. Here, the grid must be supplied by
-an 81 characters long string, containing the digits of the one by one, line by line, in a single row.
+an 81 characters long string, containing the digits of the one by one, line by line grid in a single row.
 
 ## Calling the program
 
