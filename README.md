@@ -411,8 +411,8 @@ which is actually a sequential mechanism, but implemented highly efficiently in 
 not the same approach. The actual problem in this partial solution is that it's highly complex and requires a high number 
 of operations. Thus, it highly diverges from the extreme simplicity of the original algorithm. Fortunately, associated with numerous 
 other low level optimizations in C language, it contributed to a significant 
-speedup (as can be seen [here](https://github.com/nilostolte/Sudoku#branchless-transformation-from-bit-representation)) and
-more simplicity (as seen [here](https://github.com/nilostolte/Sudoku#table-to-convert-from-bit-representation)).
+speedup (as can be seen [here](https://github.com/nilostolte/Sudoku#branchless-transformation-from-bit-representation)), and
+a better speedup as well as less complexity (as seen [here](https://github.com/nilostolte/Sudoku#table-to-convert-from-bit-representation)). 
 
 A comparative test between the Java implementation and an identical C inplementation has given a considerable advantage to the C
 implementation, not only in terms of raw performance, but also in terms of less variability in times measured for solving
