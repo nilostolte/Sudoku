@@ -368,6 +368,33 @@ this is also consequence of the highly "imperative" way of implementing this [al
 which manifestly highly benefits the C implementation, that in itself is more easily optimizable by employing extremely low level
 gimmicks that are absent in Java.
 
+### Table to Convert from Bit Representation
+
+Another way to do the calculation [above](https://github.com/nilostolte/Sudoku#branchless-transformation-from-bit-representation)
+is using tables. For example, in C:
+
+```C
+    unsigned short c1[] = { 0, 1, 2, 0, 3 };
+    unsigned short c2[] = { 0, 4, 5, 0, 6 };
+    unsigned short c3[] = { 0, 7, 8, 0, 9 };
+```
+One can compose the digit from its bit representation `code` in the following way:
+
+```C
+    digit = c1[code & 7] | c2[(code >> 3) & 7] | c3[code >> 6];
+```
+This code is more understandable than the [previous](https://github.com/nilostolte/Sudoku#branchless-transformation-from-bit-representation)
+one. If the digit is 1, 2 or 3, one simply filter the first 3 bits of `code`and index the table `c1` with this result. Position 3 is invalid 
+since `code` has only 1 bit set, and, thus, it can't be 3. Notwithstanding, the resulting operation can be zero, in the case the binary
+representation doesn't have any bit set in that range. In this case, to satisfy the branchless logic, the table value is 0.
+If the digit is 4, 5 or 6, one shifts `code` to the right 3 positions and filter the first 3 bits and index the table `c2`
+with this result. The same logic applies to digits 7, 8 and 9, using table `c3`. Since one doesn't know which one is correct, one simply
+apply a binary or operation with the 3 results, after all only one of them contains the good digit. The other two will be zero.
+
+Trying this solution instead of the [previous](https://github.com/nilostolte/Sudoku#branchless-transformation-from-bit-representation),
+had a significant impact in the minimal execution time of the compiled C code, that was reduced to practically 1 millisecond, that is,
+an optimization of more than 30%.
+
 ## Conclusion
 
 The several optimizations proposed are complex to understand and most of them do not result in a significant speed up. The 
@@ -381,10 +408,11 @@ However, it falls short if one was thinking in using its intrisic parallelism in
 approach allows branchless solutions for the sequential search of a candidate from an arbitrary digit value, which only partially
 exploits this intrisic paralellism. Notwithstanding, it's heavily relying on the integer addition carry propagation mechanism, 
 which is actually a sequential mechanism, but implemented highly efficiently in hardware. This is just additional ingenuity, but
-not the same approach. The actual problem in this this partial solution is that it's highly complex and requires a high number 
+not the same approach. The actual problem in this partial solution is that it's highly complex and requires a high number 
 of operations. Thus, it highly diverges from the extreme simplicity of the original algorithm. Fortunately, associated with numerous 
 other low level optimizations in C language, it contributed to a significant 
-[speedup](https://github.com/nilostolte/Sudoku#branchless-transformation-from-bit-representation).
+speedup (as can be seen [here](https://github.com/nilostolte/Sudoku#branchless-transformation-from-bit-representation)) and
+more simplicity (as seen [here](https://github.com/nilostolte/Sudoku#table-to-convert-from-bit-representation)).
 
 A comparative test between the Java implementation and an identical C inplementation has given a considerable advantage to the C
 implementation, not only in terms of raw performance, but also in terms of less variability in times measured for solving
