@@ -393,7 +393,7 @@ apply a binary or operation with the 3 results, after all only one of them conta
 
 Trying this solution instead of the [previous](https://github.com/nilostolte/Sudoku#branchless-transformation-from-bit-representation),
 had a significant impact in the minimal execution time of the compiled C code, that was reduced to practically 1 millisecond, that is,
-an optimization of more than 30%.
+an optimization of more than 30%, since the initial minimal time in our comparisons was 1.5 milliseconds.
 
 ## Conclusion
 
