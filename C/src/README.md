@@ -7,9 +7,17 @@ this source code to generate the executable file, not to run the executable. The
 
 ## Instructions to compile the source code
 
-Use separate compilation for `grid.c` and `main.c` by executing the makefile `s` in command window positioned where these files
-were copied to, as follows:
+Use separate compilation for [grid.c](https://github.com/nilostolte/Sudoku/blob/main/C/src/grid.c) and 
+[main.c](https://github.com/nilostolte/Sudoku/blob/main/C/src/main.c) by executing the makefile 
+[s](https://github.com/nilostolte/Sudoku/blob/main/C/src/s) in a command window positioned where these files were copied to, as follows:
 
 ```
 make -f s
+```
+
+Or use [ninja](https://ninja-build.org/) build system with the file [build.ninja](https://github.com/nilostolte/Sudoku/blob/main/C/src/build.ninja),
+by calling ninja in a command window positioned where these files were copied to, as follows:
+
+```
+ninja
 ```
