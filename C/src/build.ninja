@@ -1,0 +1,10 @@
+cflags = -O3
+
+rule cc
+  command = gcc $cflags -c $in -o $out
+rule link
+  command = gcc $cflags -o $out $in
+
+build grid.o: cc grid.c
+build main.o: cc main.c
+build sudoku: link main.o grid.o
