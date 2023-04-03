@@ -151,6 +151,8 @@ to the digit.The table below shows the correspondance between digits and their b
 | 8     | **010000000**         | 0x080       | 128     |
 | 9     | **100000000**         | 0x100       | 256     |
 
+The binary representation as exposed in the table above is often called here as the _"code"_ of the digit.
+
 ### Implementation of Digit Retrieval in Candidate Set
 
 As we can see the variable `inserted` contains the "candidate set" for a given `matrix[i][j]`. This algorithm is quite simple but it
@@ -160,7 +162,10 @@ candidate (`digit == 10`).
 
 This means that even if there are no available candidates, the algorithm has to loop over all the remaining bits sequentially. Even if the binary 
 representation allows to deal with the candidate set with all elements in parallel, that is, all elements at once, we still have to access
-it one by one sequentially even when there are no useful results.
+it one by one sequentially even when there are no useful results. This problem is adressed with some partial solutions as shown [here](https://github.com/nilostolte/Sudoku#parallel-check-for-no-candidates) and 
+[here](https://github.com/nilostolte/Sudoku#brachless-next-candidate-determination), but this later employs far too many operations, dispite 
+the fact it's a branchless solution. It's only interesting when associated with other optimizations as it has been done in the 
+[C version](https://github.com/nilostolte/Sudoku#benchmarks-in-c).
 
 ### Stack and Backtracking implementation
 
@@ -347,7 +352,7 @@ necessary to be able to use this technique.
 
 ### Branchless Transformation from Bit Representation
 
-For this one "assembles" the bit configuration of the digit from its bit representation (`code`) as follows:
+To obtain the digit from its code,  one "assembles" the bit configuration of the digit from its bit representation (`code`) as follows:
 
 ```java
     digit = ( code >> 8 ) |
