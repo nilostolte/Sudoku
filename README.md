@@ -163,7 +163,7 @@ candidate (`digit == 10`).
 This means that even if there are no available candidates, the algorithm has to loop over all the remaining bits sequentially. Even if the binary 
 representation allows to deal with the candidate set with all elements in parallel, that is, all elements at once, we still have to access
 it one by one sequentially even when there are no useful results. This problem is adressed with some partial solutions as shown [here](https://github.com/nilostolte/Sudoku#parallel-check-for-no-candidates) and 
-[here](https://github.com/nilostolte/Sudoku#brachless-next-candidate-determination), but this later employs far too many operations, dispite 
+[here](https://github.com/nilostolte/Sudoku#brachless-next-candidate-determination), but this later employs far too many operations, despite 
 the fact it's a branchless solution. It's only interesting when associated with other optimizations as it has been done in the 
 [C version](https://github.com/nilostolte/Sudoku#benchmarks-in-c).
 
