@@ -1,3 +1,5 @@
+<img src="https://github.com/nilostolte/Sudoku/assets/80269251/ef41fe74-1b8b-415a-bab4-a65fd98ce03e" width="512" height="512"><br>
+
 # Sudoku
 Simple 9x9 Sudoku brute force solver with intrinsic parallel candidate set processing thanks to the use of bit representation for the 1-9 digits as well as bitwise operations allowing to test all the candidates at once.
 
