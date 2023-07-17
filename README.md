@@ -293,7 +293,7 @@ on the web:
 The minimal time measured for the optimized algorithm to solve the above grid after several attempts was 10 miliseconds, 
 and the double for the unoptimized algorithm. Nevertheless, the times verified were quite variable as usual in Java 
 while measuring fast algorithms like this. This is the reason it would worth trying to implement it with an entirely 
-compiled language (Java is only compiled when the JIT compiler is triggered) to verify if executiuon times are less 
+compiled language (Java is only compiled when the JIT compiler is triggered) to verify if execution times are less 
 variable. It looks like that for this kind of problem, an enterily compiled language would be more appropriate, since 
 one expects similar times for the same grid running at different times. Unfortunately this is not the case for this 
 Java implementation.
