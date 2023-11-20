@@ -172,7 +172,7 @@ the fact it's a branchless solution. It's only interesting when associated with 
 ### Stack and Backtracking implementation
 
 Digits are tried in ascending order from 1 to 9 for each element in the grid that is not yet occupied. That's why `digit` and `code` 
-variables are both initialized with 1. Every time a new digit is tried againt the candidate set, and a successful candidate is found 
+variables are both initialized with 1. Every time a new digit is tried against the candidate set, and a successful candidate is found 
 (that is, when `( code & inserted ) == 0 )`), the digit is pushed on the stack.
 
 The `push` function also updates `matrix[i][j]`, `lines[i]`, `cols[j]` and `cells[cel[i]][cel[j]]` with the new digit. Please check the 
