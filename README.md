@@ -394,10 +394,10 @@ One can compose the digit from its bit representation `code` in the following wa
     digit = c1[code & 7] | c2[(code >> 3) & 7] | c3[code >> 6];
 ```
 This code is more understandable than the [previous](https://github.com/nilostolte/Sudoku#branchless-transformation-from-bit-representation)
-one. If the digit is 1, 2 or 3, one simply filter the first 3 bits of `code`and index the table `c1` with this result. Position 3 is invalid 
+one. If the digit is 1, 2 or 3, one simply filters the first 3 bits of `code`and index the table `c1` with this result. Position 3 is invalid 
 since `code` has only 1 bit set, and, thus, it can't be 3. Notwithstanding, the resulting operation can be zero, in the case the binary
 representation doesn't have any bit set in that range. In this case, to satisfy the branchless logic, the table value is 0.
-If the digit is 4, 5 or 6, one shifts `code` to the right 3 positions and filter the first 3 bits and index the table `c2`
+If the digit is 4, 5 or 6, one shifts `code` to the right 3 positions and filters the first 3 bits and index the table `c2`
 with this result. The same logic applies to digits 7, 8 and 9, using table `c3`. Since one doesn't know which one is correct, one simply
 apply a binary or operation with the 3 results, after all only one of them contains the good digit. The other two will be zero.
 
