@@ -1,7 +1,7 @@
 <img src="https://github.com/nilostolte/Sudoku/assets/80269251/ef41fe74-1b8b-415a-bab4-a65fd98ce03e" width="512" height="512"><br>
 
 # Sudoku
-Simple 9x9 Sudoku brute force solver with intrinsic parallel candidate set processing thanks to the use of bit representation for the 1-9 digits as well as bitwise operations allowing to test all the candidates at once.
+Simple 9x9 Sudoku brute force solver with intrinsic parallel candidate set processing using bits to represent digits in the [1, 9] range, and bitwise operations to test a candidate against the candidate set, all at once.
 
 It can be upgraded for 16x16 or 25x25 grids.
 
@@ -23,7 +23,7 @@ This is the [class](https://github.com/nilostolte/Sudoku/blob/main/src/Grid.java
 ### Input 
 
 The grid can be initialized using a 9x9 matrix of type `char[][]` or through a linear string containing all the elements, representating 
-empty elements as 0, both given line by line. The `char[][]` is the unique input, however, and it must exist before being able to use
+empty elements as 0 (or ' . ' in the C or Zig version), both given line by line. The `char[][]` is the unique input, however, and it must exist before being able to use
 any other input format. Even though the 9x9 matrix contains characters (it's a `char[][]`), the digits are not represented as ASCII or Unicode
 characters but rather as integers. In other words, the character '0' is actually represented by 0, and so forth.
 
