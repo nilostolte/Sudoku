@@ -139,7 +139,7 @@ One can observe how `cel` inverse mapping works to access the corresponding cell
 ### Binary Representation for Digits
 
 In the binary representation, a digit is always a power of two, since it's a number with only one bit set to 1 at the position corresponding 
-to the digit. The table below shows the correspondance between digits and their binary representation:
+to the digit. The table below shows the correspondence between digits and their binary representation:
 
 | Digit | Binary Representation | Hexadecimal | Decimal |
 | :---: | :-------------------: | :---------: | :-----: |
