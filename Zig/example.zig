@@ -30,10 +30,6 @@ const cell = fill3x3: {           // cell array allows accessing all elements
    break :fill3x3 m;              // initializes cell array with m
 };                                //
 
-const c1 = [_]u8{ 0, 1, 2, 0, 3 };
-const c2 = [_]u8{ 0, 4, 5, 0, 6 };
-const c3 = [_]u8{ 0, 7, 8, 0, 9 };
-
 fn reinit() void {                // reinitilizes lines, columns and cells
    for (0..9) |i| {
       lines[i]   = 0;
