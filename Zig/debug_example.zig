@@ -57,10 +57,6 @@ pub fn set( s : [:0]const u8 ) void {
       for ( 0..9 ) |j| {
       	c = @intCast(s[k]-'0');
       	if (s[k] == '.') c = 0;
-      	std.debug.print("Current digit {}\nposition in string {}\nline {}\ncolumn {}\n", 
-                 .{c, k, i, j}
-        );
-      	@breakpoint();
       	if (c != 0) {
            code = @as(u9,1) << (c-1);
            // check if there is no error before inserting
@@ -73,6 +69,15 @@ pub fn set( s : [:0]const u8 ) void {
            cell[cindx[i]][cindx[j]] |= code;
         }			
       	line[j] = c;
+      	if (c != 0) {
+      	   print();
+      	   std.debug.print(
+              "Current digit {}\nposition in string {}\n" ++
+              "line {}\ncolumn {}\ncode {b}\n", 
+              .{c, k, i, j, code}
+           );
+      	   @breakpoint();
+      	}
       	k+= 1;
       }
    }
@@ -104,6 +109,10 @@ test " => testing set and print functions" {
 }
 
 pub fn main() !void {
-    set("800000000003600000070090200050007000000045700000100030001000068008500010090000400");
+    set(
+      "800000000003600000070090200" ++
+      "050007000000045700000100030" ++
+      "001000068008500010090000400"
+    );
 }
 
