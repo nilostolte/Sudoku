@@ -143,6 +143,7 @@ to the digit. The table below shows the correspondance between digits and their 
 
 | Digit | Binary Representation | Hexadecimal | Decimal |
 | :---: | :-------------------: | :---------: | :-----: |
+| 0     | **000000000**         | 0x000       | 0       |
 | 1     | **000000001**         | 0x001       | 1       |
 | 2     | **000000010**         | 0x002       | 2       |
 | 3     | **000000100**         | 0x004       | 4       |
