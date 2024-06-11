@@ -374,7 +374,7 @@ brachless calculation of the next candidate as shown
 in C passed from 1.5 to 1.4 miliseconds, which apparently wouldn't seem to justify the effort. 
 
 However, after multiple further opimizations, including using `register` variables, the minimal running time was reduced to 
-1.2 microseconds. This corresponds to a speedup of roughly 20%, which starts to become quite consequential. It's clear that 
+1.2 miliseconds. This corresponds to a speedup of roughly 20%, which starts to become quite consequential. It's clear that 
 this is also consequence of the highly "imperative" way of implementing this [algorithm](https://github.com/nilostolte/Sudoku#algorithm)
 which manifestly highly benefits the C implementation, that in itself is more easily optimizable by employing extremely low level
 gimmicks that are absent in Java.
