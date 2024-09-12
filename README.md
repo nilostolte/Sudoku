@@ -324,9 +324,9 @@ Supposing the set `included = 101011110` (that is {9,7,5,4,3,2}, the set of digi
    101011110    // included digits set: {9,7,5,4,3,2}
  + 000000010    // digit = 2
 ```
-Which is equal to **`000111100`**. One now does an exclusive or with `included`:
+Which is equal to **`101100000`**. One now does an exclusive or with `included`:
 ```
-   101111100
+   101100000
  ^ 101011110
 ```
 Which is equal to **`000111110`**. One now adds digit again:
