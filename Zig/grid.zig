@@ -2,37 +2,19 @@ const std = @import("std");
 
 var grid = [_]u8{0} ** 81;        // Sudoku grid stored linearly here
 
-const matrix = fill9x9: {         // matrix array allows accessing a  
-   var m : [9][*]u8 = undefined;  // grid element as a matrix, giving  
-   var pt : [*]u8 = &grid;        // i and j: element = matrix[i][j]
-   for (0..9) |i| {               //
-      m[i] = pt;                  // stores the pointers of each line
-	  pt += 9;                    // at each position of matrix array
-   }                              //
-   break :fill9x9 m;              // initializes matrix array with m
-};                                //
-
-var   lines   = [_]u9{0} ** 9;    // all elements present in each line
-var   columns = [_]u9{0} ** 9;    // all elements present in each column
-var   cells   = [_]u9{0} ** 9;    // all elements present in each cell
-// i' = cindx[i], 
-// j' = cindx[j]
-// cell[i'][j'] = elements in the cell of element in matrix[i][j]
-const cindx   = [_]usize{ 0,0,0, 1,1,1, 2,2,2 };
+var   lines   = [_]u16{0} ** 9;   // all elements present in each line
+var   columns = [_]u16{0} ** 9;   // all elements present in each column
+var   cells   = [_]u16{0} ** 9;   // all elements present in each cell
 
 const cell = fill3x3: {           // cell array allows accessing all elements
-   var m : [3][*]u9 = undefined;  // present in a cell using cells as a matrix,
-   var pt : [*]u9 = &cells;       // in this way: cell[cindx[i]][cindx[j]]
+   var m : [3][*]u16 = undefined; // present in a cell using cells as a matrix,
+   var pt : [*]u16 = &cells;      // in this way: cell[i div 3][j div 3]
    for (0..3) |i| {               // 
       m[i] = pt;                  // stores the pointers of each line
 	  pt += 3;                    // at each position of cell array
    }                              //
    break :fill3x3 m;              // initializes cell array with m
 };                                //
-
-const c1 = [_]u8{ 0, 1, 2, 0, 3 };
-const c2 = [_]u8{ 0, 4, 5, 0, 6 };
-const c3 = [_]u8{ 0, 7, 8, 0, 9 };
 
 fn reinit() void {                // reinitilizes lines, columns and cells
    for (0..9) |i| {
@@ -47,29 +29,29 @@ fn reinit() void {                // reinitilizes lines, columns and cells
 //
 
 pub fn set( s : [:0]const u8 ) void {
-   var k : usize = 0;
-   var code : u9 = undefined;
+   var code : u16 = undefined;
    var c : u4 = undefined;
-   var line : [*]u8 = undefined;
-   reinit(); // resets data structures to allow several sets
+   var index : usize = 0;
+   var ci : [*]u16 = undefined;
+   reinit(); // resets data structures to allow solving several games
    for ( 0..9 ) |i| {
-      line = matrix[i];
+      ci = cell[@divTrunc(i, 3)];
       for ( 0..9 ) |j| {
-      	c = @intCast(s[k]-'0');
-      	if (s[k] == '.') c = 0;
+      	c = @intCast(s[index]-'0');
+      	if (s[index] == '.') c = 0;
       	if (c != 0) {
-           code = @as(u9,1) << (c-1);
+           code = @as(u16,1) << (c-1);
            // check if there is no error before inserting
-           if (((lines[i]|columns[j]|cell[cindx[i]][cindx[j]]) & code) != 0 ) {
-           	  std.debug.print("*** Duplicate digit {} at position {}, line {}, column {}\n", .{c, k, i, j});
+           if (((lines[i]|columns[j]|ci[@divTrunc(j, 3)]) & code) != 0 ) {
+           	  std.debug.print("*** Duplicate digit {} at position {}, line {}, column {}\n", .{c, index, i, j});
            	  unreachable;
            }
            lines[i] |= code;
            columns[j] |= code;
-           cell[cindx[i]][cindx[j]] |= code;
+           ci[@divTrunc(j, 3)] |= code;
         }			
-      	line[j] = c;
-      	k+= 1;
+      	grid[index] = c;
+      	index += 1;
       }
    }
 }
@@ -79,15 +61,15 @@ pub fn set( s : [:0]const u8 ) void {
 //
 
 pub fn print() void {
-	var line : [*]u8 = undefined;
 	var c : u8 = undefined;
-	for ( 0..9 ) |i| {
-		line = matrix[i];
+	var index : usize = 0;
+	for ( 0..9 ) |_| {
 		std.debug.print("|",.{});
-		for ( 0..9 ) |j| {
-			c = line[j];
+		for ( 0..9 ) |_| {
+			c = grid[index];
 			c = if (c == 0) ' ' else (c + 48);
 			std.debug.print("{c}|", .{c});
+			index += 1;
 		}
 		std.debug.print("\n",.{});
 	}
@@ -126,37 +108,17 @@ const Stack  = struct {
        self.pt = -1;
     }
 
-    pub fn push(self: *Stack, i: u8, j: u8, code: u16) callconv(.Inline) void {
+    pub fn push(self: *Stack, i: u16, j: u16, code: u16) callconv(.Inline) void {
        self.pt += 1;
        self.stk[@intCast(self.pt)] = .{
-         .i = i,
-         .j = j,
          .code = code,
+         .i = @truncate(i),
+         .j = @truncate(j),
        };
-       //@prefetch(&matrix[i][j], .{.rw = .write, .locality = 0, .cache = .data});
-       matrix[i][j] = c1[code&7]|c2[(code>>3)&7]|c3[code>>6];
-       const code9 : u9 = @intCast(code);
-       //@prefetch(&lines[i], .{.rw = .write, .locality = 0, .cache = .data});
-       lines[i] |= code9;
-       //@prefetch(&columns[j], .{.rw = .write, .locality = 0, .cache = .data});
-       columns[j] |= code9;
-       cell[cindx[i]][cindx[j]] |= code9;
-       //cell[(i+@popCount(i))>>2][(j+@popCount(j))>>2]  |= code9;
     }
 
     pub fn pop(self: *Stack) callconv(.Inline) *StkNode {
        const node = &self.stk[@intCast(self.pt)];
-       const i = node.i;
-       const j = node.j;
-       const code9 : u9 = ~@as(u9,@truncate(node.code));
-       //@prefetch(&matrix[i][j], .{.rw = .write, .locality = 0, .cache = .data});
-       matrix[i][j] = 0;
-       //@prefetch(&lines[i], .{.rw = .write, .locality = 0, .cache = .data});
-       lines[i] &= code9;
-       //@prefetch(&columns[j], .{.rw = .write, .locality = 0, .cache = .data});
-       columns[j] &= code9;
-       cell[cindx[i]][cindx[j]] &= code9;
-       //cell[(i+@popCount(i))>>2][(j+@popCount(j))>>2]  &= code9;
        self.pt -= 1;
        return node;
     }
@@ -165,92 +127,100 @@ const Stack  = struct {
 var stack = Stack.init();
 
 test " => testing push and pop functions" {
-	std.debug.print("\nelement ({},{}) = {}\n", .{2, 0, matrix[2][0]});
-    std.debug.print("elements in line   {b}\n", .{lines[2]});
-    std.debug.print("elements in column  {b}\n", .{columns[0]});
-    std.debug.print("elements in cell    {b}\n", .{cell[0][0]});
+	const i : usize = 2;
+	const j : usize = 0;
+	var index : u8 = (i<<3) + i + j;
+	std.debug.print("\nelement ({},{}) = {}\n", .{i, j, grid[index]});
+    std.debug.print("elements in line   {b}\n", .{lines[i]});
+    std.debug.print("elements in column  {b}\n", .{columns[j]});
+    std.debug.print("elements in cell    {b}\n", .{cell[@divTrunc(i, 3)][@divTrunc(j, 3)]});
     std.debug.print("stack size    {}\n", .{ stack.size() });
-	stack.push(2,0,0b1000);
+	stack.push(i,j,0b1000);
+    grid[index] = @popCount(@as(u16,@intCast(0b1000))-1)+1;
+    lines[i] |= 0b1000;
+    columns[j] |= 0b1000;	
+    cell[@divTrunc(i, 3)][@divTrunc(j, 3)] |= 0b1000;	
 	std.debug.print("\n=> ***push executed***\n\n", .{});
 	std.debug.print("===================\n   Changed Grid\n===================\n", .{});
 	print();
-	std.debug.print("\nelement ({},{}) = {}\n", .{2, 0, matrix[2][0]});
+	std.debug.print("\nelement ({},{}) = {}\n", .{i, j, grid[index]});
     std.debug.print("code pushed             {b}\n", .{0b1000});
     std.debug.print("elements in line   {b}\n", .{lines[2]});
     std.debug.print("elements in column  {b}\n", .{columns[0]});
-    std.debug.print("elements in cell    {b}\n", .{cell[0][0]});
+    std.debug.print("elements in cell    {b}\n", .{cell[@divTrunc(i, 3)][@divTrunc(j, 3)]});
     std.debug.print("stack size    {}\n", .{ stack.size() });
 	const node = stack.pop();
+    index = (node.i<<3) + node.i + node.j;
+    grid[index] = 0;
+    lines[i] &= ~@as(u16,@intCast(0b1000));
+    columns[j] &= ~@as(u16,@intCast(0b1000));
+    cell[@divTrunc(i, 3)][@divTrunc(j, 3)] &= ~@as(u16,@intCast(0b1000));
 	std.debug.print("\n=> ***pop executed***\n\n", .{});
-	std.debug.print("element ({},{}) = {}\n", .{node.i, node.j, matrix[2][0]});
+	std.debug.print("===================\n   Changed Grid\n===================\n", .{});
+	print();
+	std.debug.print("element ({},{}) = {}\n", 
+          .{node.i, node.j, grid[index]}
+    );
     std.debug.print("code poped              {b}\n", .{node.code});
     std.debug.print("elements in line   {b}\n", .{lines[node.i]});
     std.debug.print("elements in column  {b}\n", .{columns[node.j]});
-    std.debug.print("elements in cell    {b}\n", .{cell[0][0]});
+    std.debug.print("elements in cell    {b}\n", .{cell[@divTrunc(i, 3)][@divTrunc(j, 3)]});
     std.debug.print("stack size    {}\n", .{ stack.size() });
 }
 
 pub fn solve() void {
-	var node : *StkNode = undefined;
-	var code : u16 = 1;
-	var inserted : u16 = undefined;
-	var j : u8 = 0;
-	var i : u8 = 0;
-	var line : [*]u8 = matrix[0];
-	var li : u16 = lines[0];
-	var ci : [*]u9 = cell[0];
-	var c : u8 = undefined;
-	@prefetch(&line[0], .{.rw = .read, .locality = 0, .cache = .data});
+	var node : *StkNode = undefined;       //
+	var code : u16 = 1;                    // binary code for candidate
+	var inserted : u16 = undefined;        // occupation set
+	var j : u16 = 0;                       //
+	var i : u16 = 0;                       //
+	var li : u16 = lines[0];               // occupation sets of a line
+	var ci : [*]u16 = cell[0];             // occupation sets of a cell line
+	var c : u8 = undefined;                // candidate in {0,1,2,3,4,5,6,7,8,9} 
+	var index : u16 = 0;                   // index in the grid
+	//@breakpoint();
+	@prefetch(&grid[index], .{.rw = .read, .locality = 0, .cache = .data});
 	while (true) {
-	   c = line[j];
+	   c = grid[index];
 	   if ( c == 0 ) {                     // jump over non empty elements
 	     // "inserted" is the occupation set, the inverse of the candidate set
-	     inserted = li|columns[j]|(ci[cindx[j]]);
+	     inserted = li|columns[j]|ci[@divTrunc(j, 3)];
 	     // if adding candidate with occupation set overflows -> no candidate
 	     if ( (inserted + code ) >= 512 ) {// backtrack if there isn't any candidate
 	       node = stack.pop();             // pop previous inserted i, j, and code
 	       i = node.i;
 	       j = node.j;
-	       line = matrix[i];               // line might have changed
-	       ci = cell[cindx[i]];
-	       //ci = cell[(i+@popCount(i))>>2];
+           index = @shlExact(i,3) + i + j;
+	       grid[index] = 0;                // erase previous value
+           lines[i] &= ~node.code;
 	       li = lines[i];
-	       code = (node.code) << 1;        // get next candidate
-	       @prefetch(&line[j], .{.rw = .read, .locality = 0, .cache = .data});
+           columns[j] &= ~node.code;
+           ci = cell[@divTrunc(i, 3)];
+           ci[@divTrunc(j, 3)] &= ~node.code;
+	       code = @shlExact(node.code, 1); // get next candidate
 	       continue;                       // short-circuits line by line logic
 	     }
 	     // chosen candidate is the next empty place in the occupation set
-	     code = (((inserted + code ) ^ inserted) + code) >> 1; 
+	     code = @shrExact(((inserted + code ) ^ inserted) + code, 1);
 	     stack.push(i, j, code);           // store and save candidate
-	     li |= code;
+         grid[index] = @popCount(code-1)+1;
+         lines[i] |= @truncate(code);
+         li = lines[i];
+         columns[j] |= @truncate(code);
+         ci[@divTrunc(j, 3)] |= @intCast(code);
 	     code = 1;                         // next candidate starts with 1
 	   }
-	   if ( j == 8 ) {                     // reached last element in the line
+	   index += 1;                         // advance to the next position in grid
+	   j += 1;                             // advance to the next column
+	   if ( j == 9 ) {                     // reached last element in the line
 	     if ( i == 8 ) break;              // reached last element -> exit
-	     i += 1;                           // go to the next line
 	     j = 0;                            // starts with first element in the line
-	     line = matrix[i];                 // update line from grid matrix
-	     ci = cell[cindx[i]];              // update cell helper
+	     i += 1;                           // go to the next line
+	     ci = cell[@divTrunc(i, 3)];       // update cell helper
 	     li = lines[i];                    // update lines helper
-	     continue;
 	   }
-	   j += 1;                             // next element in the line
-	   @prefetch(&line[j], .{.rw = .read, .locality = 0, .cache = .data});
+	   @prefetch(&grid[index], .{.rw = .read, .locality = 2, .cache = .data});
 	}
 	stack.reset();
 }
 
-
-//pub fn main() !void {
-//    set("800000000003600000070090200050007000000045700000100030001000068008500010090000400");
-//	std.debug.print("\n===================\n    Input Grid\n===================\n", .{});
-//	print();
-//	var timer = try std.time.Timer.start();
-//	solve();
-//    const time_0 : u64 = timer.read();
-//	std.debug.print("\n===================\n     Solution\n===================\n", .{});
-//    print();
-//	@setFloatMode(.Optimized);
-//    const ftime =  @as(f64,@floatFromInt(time_0))/1000000.0;
-//    std.debug.print("\ntime in milliseconds: {d:.5}", .{ftime} );
-//}
