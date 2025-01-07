@@ -10,7 +10,8 @@ below concerns the Java implementation, even though the [C implementation](C/src
 without classes. [Zig implementation](Zig) is similar to C's but faster and with an OOP style stack. In
 the Zig version [many optimizations](Zig/README.md) allowed to achieve a minimum running time of 0.7916
 miliseconds for the same
-[test grid](https://github.com/nilostolte/Sudoku?tab=readme-ov-file#main-test-grid):
+[test grid](https://github.com/nilostolte/Sudoku?tab=readme-ov-file#main-test-grid) run on my  
+Intel Core i7-2670QM @ 2.20GHz laptop:
 
 <p align="center">
     <img src="https://github.com/user-attachments/assets/ba6d2502-1c3b-4276-83cd-6f06a3476bcf" width="400">
