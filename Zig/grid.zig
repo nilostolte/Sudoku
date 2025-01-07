@@ -38,21 +38,21 @@ pub fn set( s : [:0]const u8 ) void {
    for ( 0..9 ) |i| {
       ci = cell[@divTrunc(i, 3)];
       for ( 0..9 ) |j| {
-        c = @intCast(s[index]-'0');
-        if (s[index] == '.') c = 0;
-        if (c != 0) {
-           code = @as(u16,1) << (c-1);
-           // check if there is no error before inserting
-           if (((lines[i]|columns[j]|ci[@divTrunc(j, 3)]) & code) != 0 ) {
-               std.debug.print("*** Duplicate digit {} at position {}, line {}, column {}\n", .{c, index, i, j});
-               unreachable;
-           }
-           lines[i] |= code;
-           columns[j] |= code;
-           ci[@divTrunc(j, 3)] |= code;
-        }      
-        grid[index] = c;
-        index += 1;
+         c = @intCast(s[index]-'0');
+         if (s[index] == '.') c = 0;
+         if (c != 0) {
+            code = @as(u16,1) << (c-1);
+            // check if there is no error before inserting
+            if (((lines[i]|columns[j]|ci[@divTrunc(j, 3)]) & code) != 0 ) {
+                std.debug.print("*** Duplicate digit {} at position {}, line {}, column {}\n", .{c, index, i, j});
+                unreachable;
+            }
+            lines[i] |= code;
+            columns[j] |= code;
+            ci[@divTrunc(j, 3)] |= code;
+         }      
+         grid[index] = c;
+         index += 1;
       }
    }
 }
@@ -65,14 +65,14 @@ pub fn print() void {
   var c : u8 = undefined;
   var index : usize = 0;
   for ( 0..9 ) |_| {
-    std.debug.print("|",.{});
-    for ( 0..9 ) |_| {
-      c = grid[index];
-      c = if (c == 0) ' ' else (c + 48);
-      std.debug.print("{c}|", .{c});
-      index += 1;
-    }
-    std.debug.print("\n",.{});
+     std.debug.print("|",.{});
+     for ( 0..9 ) |_| {
+        c = grid[index];
+        c = if (c == 0) ' ' else (c + 48);
+        std.debug.print("{c}|", .{c});
+        index += 1;
+     }
+     std.debug.print("\n",.{});
   }
 }
 
