@@ -11,10 +11,9 @@ without classes. [Zig implementation](Zig) is similar to C's but faster and with
 the Zig version [many optimizations](Zig/README.md) allowed to achieve a minimum running time of 0.7916
 miliseconds for the same
 [test grid](https://github.com/nilostolte/Sudoku?tab=readme-ov-file#main-test-grid):
-![image](https://github.com/user-attachments/assets/ba6d2502-1c3b-4276-83cd-6f06a3476bcf)
 
 <p align="center">
-    <img src="https://github.com/user-attachments/assets/ba6d2502-1c3b-4276-83cd-6f06a3476bcf" width="300">
+    <img src="https://github.com/user-attachments/assets/ba6d2502-1c3b-4276-83cd-6f06a3476bcf" width="400">
 </p>
 
 The supplied Windows 64 executables for the [C](C/bin/sudoku.exe) and [Zig](Zig/sudoku.exe) implementations can be
