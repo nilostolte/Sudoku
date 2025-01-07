@@ -191,13 +191,13 @@ pub fn solve() void {
           node = stack.pop();             // pop previous inserted i, j, and code
           i = node.i;
           j = node.j;
-            index = @shlExact(i,3) + i + j;
+          index = @shlExact(i,3) + i + j;
           grid[index] = 0;                // erase previous value
-            lines[i] &= ~node.code;
+          lines[i] &= ~node.code;
           li = lines[i];
-            columns[j] &= ~node.code;
-            ci = cell[@divTrunc(i, 3)];
-            ci[@divTrunc(j, 3)] &= ~node.code;
+          columns[j] &= ~node.code;
+          ci = cell[@divTrunc(i, 3)];
+          ci[@divTrunc(j, 3)] &= ~node.code;
           code = @shlExact(node.code, 1); // get next candidate
           continue;                       // short-circuits line by line logic
         }
