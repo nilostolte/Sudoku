@@ -131,41 +131,41 @@ test " => testing push and pop functions" {
 	const j : usize = 0;
 	var index : u8 = (i<<3) + i + j;
 	std.debug.print("\nelement ({},{}) = {}\n", .{i, j, grid[index]});
-    std.debug.print("elements in line   {b}\n", .{lines[i]});
-    std.debug.print("elements in column  {b}\n", .{columns[j]});
-    std.debug.print("elements in cell    {b}\n", .{cell[@divTrunc(i, 3)][@divTrunc(j, 3)]});
-    std.debug.print("stack size    {}\n", .{ stack.size() });
+  std.debug.print("elements in line   {b}\n", .{lines[i]});
+  std.debug.print("elements in column  {b}\n", .{columns[j]});
+  std.debug.print("elements in cell    {b}\n", .{cell[@divTrunc(i, 3)][@divTrunc(j, 3)]});
+  std.debug.print("stack size    {}\n", .{ stack.size() });
 	stack.push(i,j,0b1000);
-    grid[index] = @popCount(@as(u16,@intCast(0b1000))-1)+1;
-    lines[i] |= 0b1000;
-    columns[j] |= 0b1000;	
-    cell[@divTrunc(i, 3)][@divTrunc(j, 3)] |= 0b1000;	
-	std.debug.print("\n=> ***push executed***\n\n", .{});
-	std.debug.print("===================\n   Changed Grid\n===================\n", .{});
-	print();
-	std.debug.print("\nelement ({},{}) = {}\n", .{i, j, grid[index]});
-    std.debug.print("code pushed             {b}\n", .{0b1000});
-    std.debug.print("elements in line   {b}\n", .{lines[2]});
-    std.debug.print("elements in column  {b}\n", .{columns[0]});
-    std.debug.print("elements in cell    {b}\n", .{cell[@divTrunc(i, 3)][@divTrunc(j, 3)]});
-    std.debug.print("stack size    {}\n", .{ stack.size() });
-	const node = stack.pop();
-    index = (node.i<<3) + node.i + node.j;
-    grid[index] = 0;
-    lines[i] &= ~@as(u16,@intCast(0b1000));
-    columns[j] &= ~@as(u16,@intCast(0b1000));
-    cell[@divTrunc(i, 3)][@divTrunc(j, 3)] &= ~@as(u16,@intCast(0b1000));
-	std.debug.print("\n=> ***pop executed***\n\n", .{});
+  grid[index] = @popCount(@as(u16,@intCast(0b1000))-1)+1;
+  lines[i] |= 0b1000;
+  columns[j] |= 0b1000;	
+  cell[@divTrunc(i, 3)][@divTrunc(j, 3)] |= 0b1000;	
+  std.debug.print("\n=> ***push executed***\n\n", .{});
+  std.debug.print("===================\n   Changed Grid\n===================\n", .{});
+  print();
+  std.debug.print("\nelement ({},{}) = {}\n", .{i, j, grid[index]});
+  std.debug.print("code pushed             {b}\n", .{0b1000});
+  std.debug.print("elements in line   {b}\n", .{lines[2]});
+  std.debug.print("elements in column  {b}\n", .{columns[0]});
+  std.debug.print("elements in cell    {b}\n", .{cell[@divTrunc(i, 3)][@divTrunc(j, 3)]});
+  std.debug.print("stack size    {}\n", .{ stack.size() });
+  const node = stack.pop();
+  index = (node.i<<3) + node.i + node.j;
+  grid[index] = 0;
+  lines[i] &= ~@as(u16,@intCast(0b1000));
+  columns[j] &= ~@as(u16,@intCast(0b1000));
+  cell[@divTrunc(i, 3)][@divTrunc(j, 3)] &= ~@as(u16,@intCast(0b1000));
+  std.debug.print("\n=> ***pop executed***\n\n", .{});
 	std.debug.print("===================\n   Changed Grid\n===================\n", .{});
 	print();
 	std.debug.print("element ({},{}) = {}\n", 
-          .{node.i, node.j, grid[index]}
-    );
-    std.debug.print("code poped              {b}\n", .{node.code});
-    std.debug.print("elements in line   {b}\n", .{lines[node.i]});
-    std.debug.print("elements in column  {b}\n", .{columns[node.j]});
-    std.debug.print("elements in cell    {b}\n", .{cell[@divTrunc(i, 3)][@divTrunc(j, 3)]});
-    std.debug.print("stack size    {}\n", .{ stack.size() });
+      .{node.i, node.j, grid[index]}
+  );
+  std.debug.print("code poped              {b}\n", .{node.code});
+  std.debug.print("elements in line   {b}\n", .{lines[node.i]});
+  std.debug.print("elements in column  {b}\n", .{columns[node.j]});
+  std.debug.print("elements in cell    {b}\n", .{cell[@divTrunc(i, 3)][@divTrunc(j, 3)]});
+  std.debug.print("stack size    {}\n", .{ stack.size() });
 }
 
 pub fn solve() void {
@@ -190,24 +190,24 @@ pub fn solve() void {
 	       node = stack.pop();             // pop previous inserted i, j, and code
 	       i = node.i;
 	       j = node.j;
-           index = @shlExact(i,3) + i + j;
+         index = @shlExact(i,3) + i + j;
 	       grid[index] = 0;                // erase previous value
-           lines[i] &= ~node.code;
+         lines[i] &= ~node.code;
 	       li = lines[i];
-           columns[j] &= ~node.code;
-           ci = cell[@divTrunc(i, 3)];
-           ci[@divTrunc(j, 3)] &= ~node.code;
+         columns[j] &= ~node.code;
+         ci = cell[@divTrunc(i, 3)];
+         ci[@divTrunc(j, 3)] &= ~node.code;
 	       code = @shlExact(node.code, 1); // get next candidate
 	       continue;                       // short-circuits line by line logic
 	     }
 	     // chosen candidate is the next empty place in the occupation set
 	     code = @shrExact(((inserted + code ) ^ inserted) + code, 1);
 	     stack.push(i, j, code);           // store and save candidate
-         grid[index] = @popCount(code-1)+1;
-         lines[i] |= @truncate(code);
-         li = lines[i];
-         columns[j] |= @truncate(code);
-         ci[@divTrunc(j, 3)] |= @intCast(code);
+       grid[index] = @popCount(code-1)+1;
+       lines[i] |= @truncate(code);
+       li = lines[i];
+       columns[j] |= @truncate(code);
+       ci[@divTrunc(j, 3)] |= @intCast(code);
 	     code = 1;                         // next candidate starts with 1
 	   }
 	   index += 1;                         // advance to the next position in grid
