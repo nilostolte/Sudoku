@@ -5,16 +5,19 @@ Simple 9x9 Sudoku brute force solver with intrinsic parallel candidate set proce
 
 It can be upgraded for 16x16 or 25x25 grids.
 
-The algorithm was implemented in [Java](https://github.com/nilostolte/Sudoku/blob/main/src), in 
-[C](https://github.com/nilostolte/Sudoku/tree/main/C/src), as well as in [Zig](https://github.com/nilostolte/Sudoku/tree/main/Zig). The description below
-concerns the Java implementation, even though, the [C implementation](https://github.com/nilostolte/Sudoku/tree/main/C/src) 
-is quite similar, but without classes. [Zig implementation](https://github.com/nilostolte/Sudoku/tree/main/Zig) is similar to C's but with an OOP style stack.
+The algorithm was implemented in [Java](src), in [C](C/src), as well as in [Zig](Zig). The description 
+below concerns the Java implementation, even though the [C implementation](C/src) is quite similar, but
+without classes. [Zig implementation](Zig) is similar to C's but faster and with an OOP style stack. In
+the Zig version [many optimizations](Zig/README.md) allowed to achieve a minimum running time of 0.8198
+miliseconds for the same
+[test grid](https://github.com/nilostolte/Sudoku?tab=readme-ov-file#main-test-grid):
 
-The [Windows 64 executable supplied](https://github.com/nilostolte/Sudoku/blob/main/C/bin/sudoku.exe) can be used to 
-solve arbitrary grids as decribed in the [documentation](https://github.com/nilostolte/Sudoku/tree/main/C/doc).
+<p align="center">
+    <img src="https://github.com/user-attachments/assets/5710d5e8-df63-4137-b7ea-a8c1503d59cd" width="300">
+</p>
 
-Updates done here and corresponding code are reported on Twitter below [this tweet](https://twitter.com/nilostolte/status/1633804599730622469). Please
-follow me on Twitter for updates.
+The supplied Windows 64 executables for the [C](C/bin/sudoku.exe) and [Zig](Zig) implementations can be
+used to solve arbitrary grids as described in the [documentation](documentation).
 
 ## Grid
 
