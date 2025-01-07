@@ -8,15 +8,16 @@ It can be upgraded for 16x16 or 25x25 grids.
 The algorithm was implemented in [Java](src), in [C](C/src), as well as in [Zig](Zig). The description 
 below concerns the Java implementation, even though the [C implementation](C/src) is quite similar, but
 without classes. [Zig implementation](Zig) is similar to C's but faster and with an OOP style stack. In
-the Zig version [many optimizations](Zig/README.md) allowed to achieve a minimum running time of 0.8198
+the Zig version [many optimizations](Zig/README.md) allowed to achieve a minimum running time of 0.7916
 miliseconds for the same
 [test grid](https://github.com/nilostolte/Sudoku?tab=readme-ov-file#main-test-grid):
+![image](https://github.com/user-attachments/assets/ba6d2502-1c3b-4276-83cd-6f06a3476bcf)
 
 <p align="center">
-    <img src="https://github.com/user-attachments/assets/5710d5e8-df63-4137-b7ea-a8c1503d59cd" width="300">
+    <img src="https://github.com/user-attachments/assets/ba6d2502-1c3b-4276-83cd-6f06a3476bcf" width="300">
 </p>
 
-The supplied Windows 64 executables for the [C](C/bin/sudoku.exe) and [Zig](Zig) implementations can be
+The supplied Windows 64 executables for the [C](C/bin/sudoku.exe) and [Zig](Zig/sudoku.exe) implementations can be
 used to solve arbitrary grids as described in the [documentation](documentation).
 
 ## Grid
