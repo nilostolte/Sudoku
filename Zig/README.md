@@ -143,5 +143,5 @@ normally assume. It's demonstrable exact.
 
 Prefetch is a very interesting resource for increasing memory cache coherency. One can't use in many 
 places in the same context. In this code I used it before entering the loop and at the end of the loop
-to keep `grid[index]` in the cache memory. I just tewweked some values and it actually produced faster
+to keep `grid[index]` in the cache memory. I just tweaked some values and it actually produced faster
 executions.
