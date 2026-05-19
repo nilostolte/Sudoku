@@ -96,11 +96,7 @@ this way in Zig:
     n = @​popCount(code - 1) + 1
 ```
 
-Substituting this code in the Zig version of the Sudoku solver produced a noticeable optimization. The ​popCount built-in actually generates a single Assembler instruction as shown here:
-
-<p align="center">
-    <img src="https://github.com/user-attachments/assets/ba6d2502-1c3b-4276-83cd-6f06a3476bcf" width="400">
-</p>
+Substituting this code in the Zig version of the Sudoku solver produced a noticeable optimization. The ​popCount built-in actually generates a single Assembler instruction.
 
 ### Actually calculating a division by 3 instead of using tables.
 
