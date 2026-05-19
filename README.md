@@ -434,9 +434,5 @@ implementation, not only in terms of raw performance, but also in terms of less 
 the same grid, even though, variable execution times were also present in the C implementation. This was expected since Java
 activates the JIT compiler not quite regularly in codes that are executed in short ammounts of time like this one.
 
-Given the extremely short execution times, the low level nature of the [original algorithm](https://github.com/nilostolte/Sudoku#algorithm),
-and the considerable amount of low level optmizations that are possible in C language, one may confortably conclude that C is the
-most appropriate language to use the algorithm, since it will provide faster answers. This means, that the C implementation can be seen
-as the ideal engine for an interactive program where the grid can be entered through a GUI and that the solution must be supplied
-in real time when it is requested by the user.
+Given the extremely short execution times, the low level nature of the [original algorithm (https://github.com/nilostolte/Sudoku#algorithm), and the considerable amount of low level optmizations that are possible in C language, one may confortably conclude that C is a more appropriate language to use this algorithm than Java, since it will provide faster answers. However, the optimizations done in [Zig](Zig/README.md) cannot be done in standard C, and these optimizations made this version even faster than the C version. This means that the [Zig implementation](Zig) can be seen as the ideal engine for an interactive program where the grid can be entered through a GUI and that the solution must be supplied in real time when it is requested by the user.
 
